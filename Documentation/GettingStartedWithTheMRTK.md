@@ -2,31 +2,14 @@
 
 ![](/External/ReadMeImages/MRTK_Logo_Rev.png)
 
-The Mixed Reality Toolkit (MRTK) is a new platform for building your Mixed Reality experiences for Virtual Reality (VR) and Augmented Reality (AR), aimed at accelerating your content production by removing any of the common complexities that complicate projects in a true multi-platform / multi-vr solution.
-The MRTK solves this by providing a common logical platform to build your dream, together with a rich set of services and SDK components for building your project.  Al these components are geared towards the new MRTK platform that abstracts out all the different ways that each platform delivers its experience.
-
 ## Prerequisites
 
 To get started with the Mixed Reality Toolkit you will need:
 
-* [Unity 2018.2.13f1 +](https://unity3d.com/get-unity/download/archive)
+* [Unity 2018.3.9f1 +](https://unity3d.com/get-unity/download/archive)
 * [Latest MRTK release (Beta)](https://github.com/Microsoft/MixedRealityToolkit-Unity/releases)
-* A dream
-
-## Upgrading from the HoloToolkit (HTK)
-
-There is not a direct upgrade path from the HoloToolkit to the new Mixed Reality Toolkit due to the rebuilt framework.  However, it is possible to import the MRTK into your HoloToolkit project and start work migrating your implementation if you wish.
-
-> The Mixed Reality Team will release a guide in the future on the key differences between HTK and MRTK project implementations.
-
-Our recommendation is that if you have an existing HTK project, then it is best to continue with the HTK as it is still a robust and feature rich platform for building HoloLens projects.
-
-If you are building a new Mixed Reality solution, then we encourage you to join us on the MRTK journey. Some of our key contributors are already building production-ready solutions already utilizing the MRTK and using their experiences to enrich the toolkit moving forward.
 
 ## Starting your new project
-
-We have done an incredible amount of work to ensure the new project experience is as streamlined as possible.  To this end, we endeavoured to get you up and running as fast as possible.
-
 To get your first project up and running, the steps are as follows:
 
 ### 1. Create your new project (or start a new scene in your current project)
@@ -163,3 +146,13 @@ For more information on the rest of the toolkit, please check the following guid
 * [Configuration Profile Usage Guide]() (Coming Soon)
 * [Guide to building Registered Services]() (Coming Soon)
 * [Guide to Pointers documentation]() (Coming Soon)
+
+## Upgrading from the HoloToolkit (HTK)
+
+There is not a direct upgrade path from the HoloToolkit to the new Mixed Reality Toolkit due to the rebuilt framework.  However, it is possible to import the MRTK into your HoloToolkit project and start work migrating your implementation if you wish.
+
+> The Mixed Reality Team will release a guide in the future on the key differences between HTK and MRTK project implementations.
+
+Our recommendation is that if you have an existing HTK project, then it is best to continue with the HTK as it is still a robust and feature rich platform for building HoloLens projects.
+
+If you are building a new Mixed Reality solution, then we encourage you to join us on the MRTK journey. Some of our key contributors are already building production-ready solutions already utilizing the MRTK and using their experiences to enrich the toolkit moving forward.
