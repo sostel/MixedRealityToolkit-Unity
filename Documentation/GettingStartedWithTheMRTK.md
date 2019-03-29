@@ -55,6 +55,8 @@ Which contains the following:
 * The Main Camera is moved as a child to the Playspace - Which allows the playspace to manage the camera in conjunction with the SDK's
 * UIRaycastCamera added as a child to the Main Camera - To enable seamless UI interactions through the toolkit
 
+> If you get errors like "XR: OpenVR Error! OpenVR failed initialization with error code VRInitError_Init_PathRegistryNotFound: "Installation path could not be located (110)!" it is safe to ignore this. You can change your build settings (File->Build Settings) and change your build target to "Universal Windows Platform" to remove these errors.
+
 > **Note** While working in your scene, **DON'T move the Main Camera** (or the playspace) from the scene origin (0,0,0).  This is controlled by the MRTK and the active SDK.
 > If you need to move the players start point, then **move the scene content and NOT the camera**!
 
@@ -62,6 +64,25 @@ Which contains the following:
 
 You are now ready to start building your Mixed Reality Solution, just start adding content and get building.
 Switch to other platforms (ensure they have XR enabled in their player settings) and your project will still run as expected without change.
+
+To preview your change in a mixed reality headset, do the following:
+
+1. Open build settings (File->Build Settings) and change your build target to "Universal Windows Platform".
+2. Close Unity
+3. Connect your WMR headset, wait for Windows Mixed Reality to load and verify you are in cliff house.
+4. Open Unity.
+5. Press play. You will see an animation to go into the Unity app, and should see controllers.
+
+To preview changes in editor, press play, and move a hand aroud by pressing spacebar.
+
+### 5. Check out example scene
+1. Open the scene *MixedRealityToolkit.Examples\Demos\HandTracking\Scenes\HandInteractionExamples.unity* to see a scene with lots of UI controls you can use.
+
+2. When you see 'TMP Importer' dialog, select 'Import TMP Essentials'. You will then see large text in the screen, so you'll need to close and re-open Unity.
+
+3. Close and re-open Unity
+
+4. Re-open the scene, and press play to see the example.
 
 <a name="configuring"/>
 
