@@ -28,35 +28,19 @@ Accept all the content and continue.
 
 ![](/External/ReadMeImages/MRTK_AssetImportDialog.png)
 
-> The SDK is optional but highly recommended for new users.  Once you have a feel for how the toolkit works, you can remove these safely if you are not using them.
+> The SDK, Example, Providers, Services folders are optional but highly recommended for new users.  Once you have a feel for how the toolkit works, you can remove these safely if you are not using them.
 
-> The MRTK also provides a [separate "Examples" asset](https://github.com/Microsoft/MixedRealityToolkit-Unity/releases), which currently contains demonstration scenes for current MRTK features.  In the future this will also contain educational "Example" scenes to aid with learning implementation tricks with the toolkit.
-
-### 3. Accept the Setup prompt (optional)
-![](/External/ReadMeImages/MRTK_UnitySetupPrompt.png)
-
-Once imported, the MRTK will attempt to setup your project automatically for building Mixed Reality solutions, namely setting:
-
-* Enable XR Settings for your current platform (enabling the XR checkbox)
-> Note, you need to do this for each platform you wish to deploy on
-* Force Text Serialization / Visible Meta files (recommended for Unity projects using source control)
-* Change the Scripting back-end to use IL2CPP (as Unity is deprecating the .NET scripting back-end)
-
-> The only option which is mandatory (and not listed above) is to set Unity to use the .NET 4 scripting runtime by default, as the MRTK uses advanced coding functions only available in .NET4+.  
-> From Unity 2018.3 and above, this will be the default for new Unity Projects.
-
-This prompt will automatically set the above options for you and restart Unity (for the .NET update) ready to start building your MRTK project.
-
-Accepting these options is completely optional (except .NET 4), if you click **Later**, the MRTK will not ask you again and leave you to it.  You can then choose to set these options manually later as you see fit.
-
-### 4. Configure your first Mixed Reality Toolkit scene
-
+### 3. Configure your first Mixed Reality Toolkit scene
 The toolkit has been designed so that there is just one object that is mandatory in your scene.  This is there to provide the core configuration and runtime for the Mixed Reality Toolkit (one of the key advantages in the new framework).
 
-Configuring your scene is extremely simple by simply selecting the following from the Editor menu:
+1. Select "Mixed Reality Toolkit/Configure" from the Editor menu:
 > Mixed Reality Toolkit -> Configure
 
 ![](/External/ReadMeImages/MRTK_ConfigureScene.png)
+
+2. Select "Ok" in the dialog that says 'you must choose a configuration'.
+
+3. Select "DefaultMixedRealityToolkitConfigurationProfile"
 
 Once this completes, you will see the following in your Scene hierarchy:
 
@@ -74,7 +58,7 @@ Which contains the following:
 > **Note** While working in your scene, **DON'T move the Main Camera** (or the playspace) from the scene origin (0,0,0).  This is controlled by the MRTK and the active SDK.
 > If you need to move the players start point, then **move the scene content and NOT the camera**!
 
-### 5. Hit play
+### 4. Hit play
 
 You are now ready to start building your Mixed Reality Solution, just start adding content and get building.
 Switch to other platforms (ensure they have XR enabled in their player settings) and your project will still run as expected without change.
