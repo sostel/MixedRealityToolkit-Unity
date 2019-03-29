@@ -7,6 +7,7 @@
 To get started with the Mixed Reality Toolkit you will need:
 
 * [Unity 2018.3.9f1 +](https://unity3d.com/get-unity/download/archive)
+  * When installing Unity, make sure to include IL2CPP backend, and UWP tools.
 * [Latest MRTK release (Beta)](https://github.com/Microsoft/MixedRealityToolkit-Unity/releases)
 
 ## Starting your new project
