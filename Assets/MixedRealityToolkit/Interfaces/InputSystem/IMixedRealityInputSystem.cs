@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using Microsoft.MixedReality.Toolkit.Core.Definitions.Devices;
-using Microsoft.MixedReality.Toolkit.Core.Definitions.InputSystem;
-using Microsoft.MixedReality.Toolkit.Core.Definitions.Utilities;
-using Microsoft.MixedReality.Toolkit.Core.Interfaces.Devices;
-using Microsoft.MixedReality.Toolkit.Core.Interfaces.Events;
+using Microsoft.MixedReality.Toolkit.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
+namespace Microsoft.MixedReality.Toolkit.Input
 {
     /// <summary>
     /// Manager interface for a Input system in the Mixed Reality Toolkit
@@ -34,7 +30,7 @@ namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
         HashSet<IMixedRealityInputSource> DetectedInputSources { get; }
 
         /// <summary>
-        /// List of <see cref="IMixedRealityController"/>s currently detected by the input manager.
+        /// List of <see cref="Microsoft.MixedReality.Toolkit.Input.IMixedRealityController"/>s currently detected by the input manager.
         /// </summary>
         /// <remarks>
         /// This property is similar to <see cref="DetectedInputSources"/>, as this is a subset of those <see cref="IMixedRealityInputSource"/>s in that list.
@@ -50,6 +46,11 @@ namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
         /// The current Gaze Provider that's been implemented by this Input System.
         /// </summary>
         IMixedRealityGazeProvider GazeProvider { get; }
+
+        /// <summary>
+        /// The current Eye Gaze Provider that's been implemented by this Input System.
+        /// </summary>
+        IMixedRealityEyeGazeProvider EyeGazeProvider { get; }
 
         /// <summary>
         /// Indicates if input is currently enabled or not.
@@ -119,7 +120,7 @@ namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
         /// <returns>a new unique Id for the input source.</returns>
         uint GenerateNewSourceId();
 
-        IMixedRealityInputSource RequestNewGenericInputSource(string name, IMixedRealityPointer[] pointers = null);
+        IMixedRealityInputSource RequestNewGenericInputSource(string name, IMixedRealityPointer[] pointers = null, InputSourceType sourceType = InputSourceType.Other);
 
         /// <summary>
         /// Raise the event that the Input Source was detected.
@@ -200,14 +201,14 @@ namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
         /// Raise the focus enter event.
         /// </summary>
         /// <param name="pointer">The pointer that has focus.</param>
-        /// <param name="focusedObject">The <see cref="GameObject"/> that the pointer has entered focus on.</param>
+        /// <param name="focusedObject">The <see href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject</see> that the pointer has entered focus on.</param>
         void RaiseFocusEnter(IMixedRealityPointer pointer, GameObject focusedObject);
 
         /// <summary>
         /// Raise the focus exit event.
         /// </summary>
         /// <param name="pointer">The pointer that has lost focus.</param>
-        /// <param name="unfocusedObject">The <see cref="GameObject"/> that the pointer has exited focus on.</param>
+        /// <param name="unfocusedObject">The <see href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject</see> that the pointer has exited focus on.</param>
         void RaiseFocusExit(IMixedRealityPointer pointer, GameObject unfocusedObject);
 
         #endregion Focus Events
@@ -544,12 +545,11 @@ namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
         /// 
         /// </summary>
         /// <param name="source"></param>
-        /// <param name="inputAction"></param>
         /// <param name="confidence"></param>
         /// <param name="phraseDuration"></param>
         /// <param name="phraseStartTime"></param>
-        /// <param name="text"></param>
-        void RaiseSpeechCommandRecognized(IMixedRealityInputSource source, MixedRealityInputAction inputAction, RecognitionConfidenceLevel confidence, TimeSpan phraseDuration, DateTime phraseStartTime, string text);
+        /// <param name="command"></param>
+        void RaiseSpeechCommandRecognized(IMixedRealityInputSource source, RecognitionConfidenceLevel confidence, TimeSpan phraseDuration, DateTime phraseStartTime, SpeechCommands command);
 
         #endregion Speech Keyword Events
 
@@ -588,6 +588,26 @@ namespace Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem
         void RaiseDictationError(IMixedRealityInputSource source, string dictationResult, AudioClip dictationAudioClip = null);
 
         #endregion Dictation Events
+
+        #region Hand Events
+
+        /// <summary>
+        /// Notify system that articulated hand joint info has been updated
+        /// </summary>
+        void RaiseHandJointsUpdated(IMixedRealityInputSource source, Handedness handedness, IDictionary<TrackedHandJoint, MixedRealityPose> jointPoses);
+
+        /// <summary>
+        /// Notify system that articulated hand mesh has been updated
+        /// </summary>
+        void RaiseHandMeshUpdated(IMixedRealityInputSource source, Handedness handedness, HandMeshInfo handMeshInfo);
+
+        void RaiseOnTouchStarted(IMixedRealityInputSource source, IMixedRealityController controller, Handedness handedness, Vector3 touchPoint);
+
+        void RaiseOnTouchUpdated(IMixedRealityInputSource source, IMixedRealityController controller, Handedness handedness, Vector3 touchPoint);
+
+        void RaiseOnTouchCompleted(IMixedRealityInputSource source, IMixedRealityController controller, Handedness handedness, Vector3 touchPoint);
+
+        #endregion Hand Events
 
         #endregion Input Events
     }

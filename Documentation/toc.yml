@@ -1,0 +1,90 @@
+﻿- name: About MRTK
+  items:
+  - name: MRTK-SDK
+    href: ../MRTK-SDK.md
+  - name: MRTK-vNext
+    href: ../MRTK-vNext.md
+  - name: Mixed Reality Services
+    href: ../External/Documentation/MixedRealityServices.md
+- name: Contributing
+  href: ../CONTRIBUTING.md
+  items:
+  - name: Feature Contribution Process
+    href: ../Feature_Contribution_Process.md
+  - name: Coding Guidelines
+    href: ../CodingGuidelines.md
+  - name: Documentation Guide
+    href: ../DocumentationGuide.md
+  - name: Developer Docs Generation
+    href: DevDocGuide.md
+- name: How-tos
+  href: ../External/HowTo/README.md
+  items:
+  - name: Getting Started
+    href: GettingStartedWithTheMRTK.md
+    items:
+    - name: Downloading MRTK
+      href: DownloadingTheMRTK.md
+  - name: Core Features
+    href: TODO.md
+    items:
+    - name: Packages
+      href: TODO.md
+    - name: Service Provider
+      href: MixedRealityConfigurationGuide.md
+    - name: Input
+      href: TODO.md
+      items:
+      - name: Hands
+        href: TODO.md
+      - name: Voice
+        href: TODO.md
+      - name: Eye
+        href: TODO.md
+      - name: Gaze
+        href: TODO.md
+      - name: Controllers
+        href: TODO.md
+    - name: Recommended Interaction Models
+      href: TODO.md
+      items:
+      - name: Gaze + Select
+        href: TODO.md
+      - name: Near Interaction
+        href: TODO.md
+      - name: Far Interaction
+        href: TODO.md
+      - name: ET + Voice
+        href: TODO.md
+    - name: UX Building Blocks
+      href: TODO.md
+    - name: Spatial Mapping
+      href: TODO.md
+    - name: In-Editor Input Simulation
+      href: TODO.md
+    - name: Performance Diagnostic Tool
+      href: TODO.md
+  - name: Other Features
+    href: TODO.md
+    items:
+    - name: QR Tracking
+      href: TODO.md
+    - name: Spatial Audio
+      href: TODO.md
+  - name: Advanced topics
+    href: TODO.md
+    items:
+    - name: Performance
+      href: TODO.md
+    - name: Shared Experiences
+      href: TODO.md
+    - name: Moving your project from HTK to MRTK
+      href: TODO.md
+- name: Planning
+  items:
+  - name: MRTK-WorkRoadmap
+    href: ../MRTK-WorkRoadmap.md
+  - name: Roadmap
+    href: ../Roadmap.md
+- name: Notice
+  href: ../NOTICE.md

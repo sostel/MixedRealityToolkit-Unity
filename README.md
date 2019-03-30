@@ -2,80 +2,43 @@
 
 # What is MixedRealityToolkit
 
-MRTK is a Microsoft Driven opensource project. 
+MRTK is a Microsoft Driven open source project. MRTK-Unity...
+* Provides the **basic building blocks for unity development on HoloLens, Windows Mixed Reality, and OpenVR**.
+* Showcases UX best practices with **UI controls that match Windows Mixed Reality and HoloLens Shell**. 
+* **Enables rapid prototyping** via in-editor simulation that allows you to see changes immediately.
+* **Supports a wide range of platforms**, including
+  * Microsoft HoloLens
+  * Microsoft HoloLens 2
+  * Microsoft Immersive headsets (IHMD)
+  * Windows Mixed Reality headsets
+  * OpenVR headsets (HTC Vive / Oculus Rift)
+    
+* Is **extensible**. Provides devs ability to swap out core components and extend the framework.
 
-MRTK-Unity provides a set of foundational components and features to accelerate MR app development in Unity. Latest Release of MRTK (V2) supports HoloLens/HoloLens 2, WMR, and OpenVR platform. Start your project with MRTK, and 
+# Build Status
 
-# What's MRTK-Unity good for 
- 
-* Provide basic features as an easy to use SDK to reduce the barrier-to-entry to get started.
-
-* Enable rapid prototyping by providing the basic building blocks for MR app development. 
-
-* Showcase best practices in MR with UI controls and interactions that matches the WMR and HoloLens Shell. 
-
-* Support a wide audience, allowing solutions to be built that will run on multiple VR / AR / XR platforms such as Mixed Reality,  Steam/Open VR.
-
-* Ensure an extensive framework for advanced integrators, with the ability to swap out core components with their own should they wish to, or simply extend the framework to add new capabilities.
-
+| Branch | Status |
+|---|---|
+| `mrtk_development` |[![Build status](https://dev.azure.com/aipmr/MixedRealityToolkit-Unity-CI/_apis/build/status/public/mrtk_development-CI)](https://dev.azure.com/aipmr/MixedRealityToolkit-Unity-CI/_build/latest?definitionId=1)|
 
  # Required Software
 | [![Windows 10 Creators Update](External/ReadMeImages/MRTK170802_Short_17.png)](https://www.microsoft.com/software-download/windows10) [Windows 10 FCU](https://www.microsoft.com/software-download/windows10)| [![Unity](External/ReadMeImages/MRTK170802_Short_18.png)](https://unity3d.com/get-unity/download/archive) [Unity 3D](https://unity3d.com/get-unity/download/archive)| [![Visual Studio 2017](External/ReadMeImages/MRTK170802_Short_19.png)](http://dev.windows.com/downloads) [Visual Studio 2017](http://dev.windows.com/downloads)| [![Simulator (optional)](External/ReadMeImages/MRTK170802_Short_20.png)](https://go.microsoft.com/fwlink/?linkid=852626) [Simulator (optional)](https://go.microsoft.com/fwlink/?linkid=852626)|
 | :--- | :--- | :--- | :--- |
 | To develop apps for mixed reality headsets, you need the Windows 10 Fall Creators Update | The Unity 3D engine provides support for building mixed reality projects in Windows 10 | Visual Studio is used for code editing, deploying and building UWP app packages | The Emulators allow you test your app without the device in a simulated environment |
 
-
-# Supported Platform 
-
-The Mixed Reality Toolkit V2 will includes many APIs to accelerate the development of MR / XR / VR / AR projects for a range of supported devices, starting with
-
- - Microsoft HoloLens
- - Microsoft HoloLens 2
- - Microsoft Immersive headsets (IHMD)
- - OpenVR (HTC Vive / Oculus Rift)
- 
-# Feature areas
-
-* Input System
-
-* Articulated Hands + Gestures (HoloLens 2)
-
-* Eye Tracking (HoloLens2) 
-
-* Voice Commanding 
-
-* Gaze + Select (HoloLens)
-
-* Controller Visualization 
-
-* Teleportation 
-
-* UI Controls 
-
-* Solver and Interactions 
-
-* Spatial Understanding 
-
-* Diagnostic Tool 
-
-
 # Getting Started with MRTK 
+1. [Download MRTK](Documentation/DownloadingTheMRTK.md)
+2. Follow this [Getting Started Guide](Documentation/GettingStartedWithTheMRTK.md)
+3. Check out [Mixed Reality Toolkit configuration guide](Documentation/MixedRealityConfigurationGuide.md)
 
-You can find out how to use MRTK to develop for Windows Mixed Reality on the MS Developer Site.
-
-The Mixed Reality team have prepared a few guides for getting up to speed on using the new Mixed Reality Toolkit, which can be found here:
-
-* [Downloading the Mixed Reality Toolkit](/Documentation/DownloadingTheMRTK.md)
-* [Getting Started with the Mixed Reality Toolkit](/Documentation/GettingStartedWithTheMRTK.md)
-* [Mixed Reality Toolkit configuration guide](/Documentation/MixedRealityConfigurationGuide.md)
-
+### More documentation
 Find this readme, other documentation articles and the MRTK api reference on our [MRTK Dev Portal on github.io](https://microsoft.github.io/MixedRealityToolkit-Unity/). 
 
 # Engage with the Community
 
 Join the conversation around MRTK on [Slack](https://holodevelopers.slack.com/).
 
-Ask questions about using MRRTK on [Stack Overflow](https://stackoverflow.com/questions/tagged/mrtk).
+Ask questions about using MRTK on [Stack Overflow](https://stackoverflow.com/questions/tagged/mrtk) using the **MRTK** tag.
 
 Search for solution or file a new issue in [GitHub](https://github.com/Microsoft/MixedRealityToolkit-Unity/issues) if you find something broken in MRTK code.
 
@@ -115,11 +78,5 @@ You can find our planning material on [our wiki](https://github.com/Microsoft/Mi
 
 ### How to Contribute
 View the [**How To Contribute**](https://github.com/Microsoft/MixedRealityToolkit-Unity/wiki/How-to-Contribute) wiki page for the most up to date instructions on contributing to the Mixed Reality Toolkit!
-
-### Build Status
-
-| Branch | Status |
-|---|---|
-| `mrtk_development` |[![Build status](https://dev.azure.com/aipmr/MixedRealityToolkit-Unity-CI/_apis/build/status/public/mrtk_development-CI)](https://dev.azure.com/aipmr/MixedRealityToolkit-Unity-CI/_build/latest?definitionId=1)|
 
 ### For details on the different branches used in the Mixed Reality Toolkit repositories, check this [Branch Guide here](https://github.com/Microsoft/MixedRealityToolkit-Unity/wiki/Branch-Guide).

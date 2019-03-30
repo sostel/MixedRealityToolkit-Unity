@@ -5,7 +5,7 @@
 This document outlines the documentation guidelines and standards for the Mixed Reality Toolkit (MRTK). Herein you will find the standards for the following formsfs of the MRTK documentation:
 
 - [Source](#source-documentation)
-- [Conceptual](#conceptual-documentation)
+- [How-To](#how-to-documentation)
 - [Design](#design-documentation)
 - [Performance Notes](#performance-notes)
 - [Breaking Changes](#breaking-changes)
@@ -17,7 +17,7 @@ API documentation will be generated automatically from the MRTK source files. To
 
 - [Class, Struct, Enum Summary Blocks](#class-struct-enum-summary-blocks)
 - [Property, Method, Event Summary Blocks](#property-method-event-summary-blocks)
-- [Feature Introduction Version and Dependencies](#feature-introductuin-version-and-dependencies)
+- [Feature Introduction Version and Dependencies](#feature-introduction-version-and-dependencies)
 - [Serialized Fields](#serialized-fields)
 - [Enumeration Values](#enumeration-values)
 
@@ -112,7 +112,7 @@ When defining and enumeration, code must also document the meaning of the enum v
 
 ---
 
-## Conceptual Documentation
+## How-To Documentation
 
 Many users of the Mixed Reality Toolkit may not need to use the API documentation. These users will take advantage of our pre-made, reusable prefabs and scripts to create their experiences.
 
@@ -137,6 +137,8 @@ Some examples where design documentation can be helpful:
 
 This type of documentation is **strongly** recommended, and **may** be requested as part of a Pull Request review. 
 
+This may or may not be different from the Design Recommendation on the [MS Developer site](https://docs.microsoft.com/en-us/windows/mixed-reality/design)
+
 [Go to Top](#documentation-guidelines)
 
 ---
@@ -158,7 +160,7 @@ Performance notes are recommended for CPU and/or GPU heavy components and **may*
 
 ## Breaking Changes
 
-Breaking changes documentation is to consist of a top level [file](/BreakingChanges.md) which links to each feature area's individual BreakingChanges.md.
+Breaking changes documentation is to consist of a top level [file](BreakingChanges.md) which links to each feature area's individual BreakingChanges.md.
 
 The feature area BreakingChanges.md files are to contain the list of all known breaking changes for a given release **as well as** the history of breaking changes from past releases.
 

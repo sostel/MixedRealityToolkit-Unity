@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information. 
 
-using Microsoft.MixedReality.Toolkit.Core.Definitions.InputSystem;
-using Microsoft.MixedReality.Toolkit.Core.Inspectors.Utilities;
-using Microsoft.MixedReality.Toolkit.Core.Services;
+using Microsoft.MixedReality.Toolkit.Utilities.Editor;
 using UnityEditor;
-using UnityEngine;
+using Microsoft.MixedReality.Toolkit.Editor;
 
-namespace Microsoft.MixedReality.Toolkit.Core.Inspectors.Profiles
+namespace Microsoft.MixedReality.Toolkit.Input.Editor
 {
     [CustomEditor(typeof(MixedRealityInputSystemProfile))]
     public class MixedRealityInputSystemProfileInspector : BaseMixedRealityToolkitConfigurationProfileInspector
@@ -33,6 +31,9 @@ namespace Microsoft.MixedReality.Toolkit.Core.Inspectors.Profiles
         private static bool showSpeechCommandsProperties = true;
         private SerializedProperty speechCommandsProfile;
 
+        private static bool showHandTrackingProperties = true;
+        private SerializedProperty handTrackingProfile;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -51,6 +52,7 @@ namespace Microsoft.MixedReality.Toolkit.Core.Inspectors.Profiles
             controllerMappingProfile = serializedObject.FindProperty("controllerMappingProfile");
             enableControllerMapping = serializedObject.FindProperty("enableControllerMapping");
             controllerVisualizationProfile = serializedObject.FindProperty("controllerVisualizationProfile");
+            handTrackingProfile = serializedObject.FindProperty("handTrackingProfile");
         }
 
         public override void OnInspectorGUI()
@@ -61,9 +63,9 @@ namespace Microsoft.MixedReality.Toolkit.Core.Inspectors.Profiles
                 return;
             }
 
-            if (GUILayout.Button("Back to Configuration Profile"))
+            if (DrawBacktrackProfileButton("Back to Configuration Profile", MixedRealityToolkit.Instance.ActiveProfile))
             {
-                Selection.activeObject = MixedRealityToolkit.Instance.ActiveProfile;
+                return;
             }
 
             EditorGUILayout.Space();
@@ -118,7 +120,7 @@ namespace Microsoft.MixedReality.Toolkit.Core.Inspectors.Profiles
                 {
                     EditorGUILayout.PropertyField(enableControllerMapping);
                     changed |= RenderProfile(controllerMappingProfile);
-                    changed |= RenderProfile(controllerVisualizationProfile);
+                    changed |= RenderProfile(controllerVisualizationProfile, true, typeof(IMixedRealityControllerVisualizer));
                 }
             }
 
@@ -139,6 +141,16 @@ namespace Microsoft.MixedReality.Toolkit.Core.Inspectors.Profiles
                 using (new EditorGUI.IndentLevelScope())
                 {
                     changed |= RenderProfile(speechCommandsProfile);
+                }
+            }
+
+            EditorGUILayout.Space();
+            showHandTrackingProperties = EditorGUILayout.Foldout(showHandTrackingProperties, "Hand Tracking Settings", true);
+            if (showHandTrackingProperties)
+            {
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    changed |= RenderProfile(handTrackingProfile);
                 }
             }
 
