@@ -1,7 +1,8 @@
 # Eye tracking examples in MRTK
 This page covers how to get quickly started with using eye tracking in MRTK by building on our provided [MRTK eye tracking example package](https://github.com/Microsoft/MixedRealityToolkit-Unity/tree/mrtk_release/Assets/MixedRealityToolkit.Examples/Demos/EyeTracking).
 The samples let you experience one of our new magical input capabilities: **Eye tracking**! 
-The demo includes a number of different use cases ranging from implicit eye-based activations to how to seamlessly combine information about what you are looking at with **voice** and **hand** input. 
+
+The demo includes a number of different use cases ranging from implicit eye-based activations, to how to seamlessly combine information about what you are looking at with **voice** and **hand** input. 
 This enables users to quickly and effortlessly select and move holographic content across their view simply by looking at a target and saying _'Select'_ or performing a hand gesture. 
 The demos also include an example for eye-gaze-directed scroll, pan and zoom of text and images on a slate. 
 Finally, an example is provided for recording and visualizing the user's visual attention on a 2D slate.
@@ -49,11 +50,11 @@ You should see several gems appear and should see the scene menu at the top.
 You should notice a small semitransparent circle at the center of your Game view. 
 This acts as an indicator of your _simulated eye gaze_.
 You can move it by pressing down the _right mouse button_ and move the mouse.
-When the cursor is hovering over the gems, you will notice that the cursor will snap to the center of the currently looked at gem. 
+When the cursor is hovering over a gem, you will notice that the cursor will snap to the center of it. 
 This is a great way to test if events are triggered as expected when _"looking"_ at a target. 
-Please beware though that the _simulated eye gaze_ via mouse control is a rather poor supplement to our rapid and unintentional eye movements. 
-It's great for testing the basic functionality though before iterating on the design by deploying it to the HoloLens 2 device.
-Coming back to our sample scene: The gem rotates as long as being looked at and can be destroyed by "looking" at it and ...
+Please be aware that the _simulated eye gaze_ via mouse control is a rather poor supplement to our rapid and unintentional eye movements. 
+However, it is great for testing the basic functionality before iterating on the design by deploying it to the HoloLens 2 device.
+Coming back to our sample scene: The gem rotates as long as it is being looked at, and can be destroyed by "looking" at it and ...
 - Pressing _Enter_ (which simulates saying "select")
 - Actually saying _"select"_ into your microphone
 - While pressing _Space_ to show the simulated hand input, click the left mouse button to perform a simulated pinch
@@ -88,8 +89,8 @@ In addition, there is a simple example of smart notifications that automatically
 
 [**Eye-Supported Navigation**](EyeTracking_Navigation.md)
 
-Imagine you are reading some information on a distant display or your e-reader and when you reach the end of the displayed text, the text automatically scrolls up to reveal more content. 
-Or how about magically zooming directly toward where you were looking at? 
+Imagine you are reading some information on a distant display or your e-reader, and when you reach the end of the displayed text, the text automatically scrolls up to reveal more content. 
+Or how about magically zooming directly towards where you are looking? 
 These are some of the examples showcased in this tutorial about eye-supported navigation.
 In addition, there is an example for hands-free rotation of 3D holograms by making them automatically rotate based on your current focus. 
 
