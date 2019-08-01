@@ -36,32 +36,39 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
 
         private void Update()
         {
-            gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
+            //gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
+            EyeTrackingTarget eyeTarget = EyeTrackingTarget.LookedAtEyeTarget;
 
-            EyeTrackingTarget lookedAtEyeTarget = EyeTrackingTarget.LookedAtEyeTarget;
-
-            // Update GameObject to the current eye gaze position at a given distance
-            if (lookedAtEyeTarget != null)
+            // Update game object to the current eye gaze hit position at a given distance
+            if (eyeTarget == null)
             {
-                // Show the object at the center of the currently looked at target.
-                if (lookedAtEyeTarget.EyeCursorSnapToTargetCenter)
+                Ray rayToObj = new Ray(CameraCache.Main.transform.position, InputSystem.EyeGazeProvider.GazeDirection);
+                RaycastHit hitInfo;
+                UnityEngine.Physics.Raycast(rayToObj, out hitInfo);
+                gameObject.transform.position = hitInfo.point;
+
+                if (hitInfo.collider == null)
                 {
-                    Ray rayToCenter = new Ray(CameraCache.Main.transform.position, lookedAtEyeTarget.transform.position - CameraCache.Main.transform.position);
+                    // If no target is hit, show the object at a default distance along the gaze ray.
+                    gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
+                }
+            }
+            // If this is an EyeTrackinTarget, we may want to show the game object at the center of the currently looked at target.
+            else
+            {
+                if (eyeTarget.EyeCursorSnapToTargetCenter)
+                {
+                    Ray rayToCenter = new Ray(CameraCache.Main.transform.position, eyeTarget.transform.position - CameraCache.Main.transform.position);
                     RaycastHit hitInfo;
                     UnityEngine.Physics.Raycast(rayToCenter, out hitInfo);
                     gameObject.transform.position = hitInfo.point;
                 }
                 else
                 {
-                    // Show the object at the hit position of the user's eye gaze ray with the target.
-                    //gameObject.transform.position = EyeTrackingTarget.LookedAtPoint;
-                    gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
+                    // Show the object at the hit position of the user's eye gaze ray with the target.    
+                    gameObject.transform.position = EyeTrackingTarget.LookedAtPoint;
+                    //gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
                 }
-            }
-            else
-            {
-                // If no target is hit, show the object at a default distance along the gaze ray.
-                gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
             }
         }
     }

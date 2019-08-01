@@ -20,6 +20,11 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             ShowIt(false);
         }
 
+        public void ToggleIt()
+        {
+            ShowIt(!this.gameObject.activeSelf);
+        }
+
         private void ShowIt(bool showIt)
         {
             if (objToShowHide != null)
