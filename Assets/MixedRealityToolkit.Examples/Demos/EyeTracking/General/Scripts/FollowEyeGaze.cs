@@ -16,7 +16,10 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         [Tooltip("Display the game object along the eye gaze ray at a default distance (in meters).")]
         [SerializeField]
         private float defaultDistanceInMeters = 2f;
-        
+
+        [SerializeField]
+        private bool keepFacingUser = true;
+
         private IMixedRealityInputSystem inputSystem = null;
   
         /// <summary>
@@ -38,6 +41,14 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         {
             //gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
             EyeTrackingTarget eyeTarget = EyeTrackingTarget.LookedAtEyeTarget;
+
+            if (keepFacingUser)
+            {
+                transform.LookAt(Camera.main.transform);
+                Vector3 turnAround = new Vector3(0, 180, 0);
+                Vector3 turnedTransform = transform.rotation.eulerAngles + turnAround;
+                transform.rotation =  Quaternion.Euler(turnedTransform);
+            }
 
             // Update game object to the current eye gaze hit position at a given distance
             if (eyeTarget == null)
