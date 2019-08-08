@@ -46,7 +46,8 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             {
                 transform.LookAt(Camera.main.transform);
                 Vector3 turnAround = new Vector3(0, 180, 0);
-                Vector3 turnedTransform = transform.rotation.eulerAngles + turnAround;
+                Vector3 turnedTransform = (transform.rotation.eulerAngles + turnAround) ;
+                turnedTransform = new Vector3(turnedTransform.x * (-1), turnedTransform.y, turnedTransform.z);
                 transform.rotation =  Quaternion.Euler(turnedTransform);
             }
 
