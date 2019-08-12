@@ -99,9 +99,10 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             }
 
             float rotx, roty;
+            float newRotX = transform.eulerAngles.x;
+            float newRotY = transform.eulerAngles.y;
             rotx = angle1x - angle2x;
-            roty = angle1y - angle2y;
-            float newRotX = transform.eulerAngles.x, newRotY = transform.eulerAngles.y;
+            roty = angle1y - angle2y;            
 
             // Restrict the rotation to a given angle range for x.
             if (Mathf.Abs(rotx) > (Mathf.Deg2Rad * rotationThreshInDegrees))

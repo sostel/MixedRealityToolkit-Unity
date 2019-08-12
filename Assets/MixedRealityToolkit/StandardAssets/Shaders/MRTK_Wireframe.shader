@@ -8,14 +8,14 @@ Shader "Mixed Reality Toolkit/Wireframe"
 {
     Properties
     {
-        _BaseColor("Base color", Color) = (0.0, 0.0, 0.0, 1.0)
+		_BaseColor("Base color", Color) = (0.0, 0.0, 0.0, 1.0)
         _WireColor("Wire color", Color) = (1.0, 1.0, 1.0, 1.0)
         _WireThickness("Wire thickness", Range(0, 800)) = 100
     }
     SubShader
-    {
-        Tags { "RenderType" = "Opaque" }
-
+    {	
+		Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
+     
         Pass
         {
             Offset 50, 100
@@ -24,7 +24,7 @@ Shader "Mixed Reality Toolkit/Wireframe"
             #pragma vertex vert
             #pragma geometry geom
             #pragma fragment frag
-
+		    
             // We only target the HoloLens (and the Unity editor), so take advantage of shader model 5.
             #pragma target 5.0
             #pragma only_renderers d3d11

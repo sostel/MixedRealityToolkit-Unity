@@ -36,6 +36,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
 
         public void SetParticle(Vector3 pos)
         {
+           //Debug.LogFormat("SetParticle at {0}", pos);
             if (particleDecalDataIndex >= maxNumberOfParticles)
             {
                 particleDecalDataIndex = 0;
@@ -53,14 +54,15 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             {
                 particleData[particleDecalDataIndex] = newParticle;
             }
-
             particleDecalDataIndex++;
         }
 
         public Vector3? GetPositionOfParticle(int index)
         {
             if ((index >= particleData.Count) || (index < 0))
+            {
                 return null;
+            }
             return particleData[index].position;
         }
 
@@ -74,11 +76,13 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
                 if (pos != point.position)
                 {
                     float dist = Vector3.Distance(pos, point.position);
-                    float tmpInt2 = 1 - saturate(dist / radius);
+                    float tmpInt2 = 1 - Saturate(dist / radius);
                     tmpIntensity += tmpInt2 * colorScaleTweaker;
                 }
             }
-            float finalIntensity = saturate(tmpIntensity);
+            
+           float finalIntensity = Saturate(tmpIntensity);
+           // Debug.LogFormat("tmpIntensity = {0} VS final = {1}", tmpIntensity, finalIntensity);
             return finalIntensity;
         }
 
@@ -87,15 +91,25 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             foreach (ParticleHeatmapParticleData particle in particleData)
             {
                 particle.color = colorGradient.Evaluate(DetermineNormalizedIntensity(particle.position, particle.radiusInMeter));
+               // Debug.LogFormat("particle.color = {0} ", particle.color);
             }
         }
 
-        float saturate(float val)
+        /// <summary>
+        /// Given float value will be clamped to [0,1].
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        float Saturate(float val)
         {
             if (val > 1)
+            {
                 return 1;
+            }
             if (val < 0)
+            {
                 return 0;
+            }
             return val;
         }
 
@@ -110,6 +124,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             }
 
             particleSys.SetParticles(particleArray, particleArray.Length);
+            UpdateColorForAllParticles();
         }
 
         public void ShowHeatmap()

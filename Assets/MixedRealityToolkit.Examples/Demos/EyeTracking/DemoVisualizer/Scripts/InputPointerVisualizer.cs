@@ -14,22 +14,18 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
     {
         public enum VisModes
         {
-            ShowAll,
+            ShowOriginsAndDestinations,
             ShowOnlyDestinations,
+            ShowOnlyOrigins,
             ShowNone
         }
 
         [SerializeField]
         private bool useLiveInputStream = false;
-
-        private bool show_Origins = false;
-        private bool show_Destinations = false;
-        private bool show_LinkD2D = false; // Destination to destination
-        private bool show_LinkO2D = false; // Origin to destination
-
-        public VisModes ShowVisMode;
-        private VisModes _showVisMode; // Using a private showTrace to detect when the item is changed in the Editor to trigger an vis update
-
+        
+        [SerializeField]
+        private VisModes showVisMode;
+        
         [SerializeField]
         private bool onlyShowForHitTargets = false;
 
@@ -62,19 +58,6 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
         public float minNrOfSamples = 4;
         public TextMesh textOutput;
 
-        // Private variables
-        private ParticleHeatmap samples_Origins;
-        private ParticleHeatmap samples_Destinations;
-
-        private GameObject[] samples_LinkOrigToOrig;
-        private GameObject[] samples_LinkDestToDest;
-        private GameObject[] samples_LinkOrigToDest;
-
-        private int currentItemIndex = 0;
-        private VisModes rememberState = VisModes.ShowOnlyDestinations;
-        private bool isPaused = false;
-        private int numberOfTraceSamples;
-
         private IMixedRealityInputSystem inputSystem = null;
 
         /// <summary>
@@ -92,6 +75,28 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
             }
         }
 
+        #region Private parameters
+        private bool show_Origins = false;
+        private bool show_Destinations = false;
+        private bool show_LinkD2D = false; // Destination to destination
+        private bool show_LinkO2D = false; // Origin to destination
+
+        private VisModes prevShowVisMode; // To detect when 'showVisMode' has changed in the Editor to trigger an update
+
+        private ParticleHeatmap samples_Origins;
+        private ParticleHeatmap samples_Destinations;
+
+        private GameObject[] samples_LinkOrigToOrig;
+        private GameObject[] samples_LinkDestToDest;
+        private GameObject[] samples_LinkOrigToDest;
+
+        private int currentItemIndex = 0;
+        private VisModes rememberState = VisModes.ShowOnlyDestinations;
+        private bool isPaused = false;
+        private int numberOfTraceSamples;
+        #endregion
+
+
         void Start()
         {
             AmountOfSamples = (int)nhist;
@@ -99,7 +104,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
             if (textOutput != null)
                 textOutput.text = "";
 
-            SetActive_DataVis(ShowVisMode);
+            SetActive_DataVis(showVisMode);
 
             // Init visualizations
             ResetVisualizations();
@@ -182,14 +187,16 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
         {
             Debug.Log("SetDataVis: " + visMode);
 
-            _showVisMode = visMode;
+            prevShowVisMode = visMode;
             switch (visMode)
             {
                 case VisModes.ShowNone:
                     SetActive_DataVis(false, false, false, false, false); break;
+                case VisModes.ShowOnlyOrigins:
+                    SetActive_DataVis(true, false, true, false, false); break;
                 case VisModes.ShowOnlyDestinations:
                     SetActive_DataVis(false, true, false, true, false); break;
-                case VisModes.ShowAll:
+                case VisModes.ShowOriginsAndDestinations:
                     SetActive_DataVis(true, true, true, true, true); break;
             }
         }
@@ -206,8 +213,6 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
             SetActive_PointCloudVis(ref samples_Destinations, showDest);
 
             SetActive_DataVis(ref samples_LinkOrigToOrig, showO2O);
-
-            Debug.Log("Set up D2D links: " + showD2D);
             SetActive_DataVis(ref samples_LinkDestToDest, showD2D);
 
             if (samples_LinkOrigToDest != null)
@@ -250,12 +255,20 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
             }
         }
 
+
+        public GameObject blob;
         private void UpdateVis_PointCloud(ref ParticleHeatmap pntCloud, int index, Vector3 newPos, bool show)
         {
             if (pntCloud != null)
-            {
+            {                
                 pntCloud.SetParticle(newPos);
                 pntCloud.DisplayParticles();
+
+                if (blob != null)
+                {
+                    blob.transform.position = newPos;
+                }
+                pntCloud.ShowHeatmap();
             }
         }
 
@@ -281,12 +294,17 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
         {
             currentItemIndex++;
             if (currentItemIndex >= numberOfTraceSamples)
+            {
                 currentItemIndex = 0;
+            }
 
             try
             {
                 // Vector origin
-                UpdateVis_PointCloud(ref samples_Origins, currentItemIndex, cursorRay.origin, show_Origins);
+                if (samples_Origins != null)
+                {
+                    UpdateVis_PointCloud(ref samples_Origins, currentItemIndex, cursorRay.origin, show_Origins);
+                }
 
                 // Vector destination / hit pos
                 Vector3? v = PerformHitTest(cursorRay);
@@ -296,8 +314,10 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
                     v = cursorRay.origin + cursorRay.direction.normalized * cursorDist;
                 }
 
-                UpdateVis_PointCloud(ref samples_Destinations, currentItemIndex, v.Value, show_Destinations);
-
+                if (samples_Destinations != null)
+                {
+                    UpdateVis_PointCloud(ref samples_Destinations, currentItemIndex, v.Value, show_Destinations);
+                }
 
                 // ... Vector destinations 
                 if ((samples_Destinations != null) && (samples_LinkDestToDest != null))
@@ -349,9 +369,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
                 return;
             }
 
-            if (ShowVisMode != _showVisMode)
+            if (showVisMode != prevShowVisMode)
             {
-                SetActive_DataVis(ShowVisMode);
+                SetActive_DataVis(showVisMode);
             }
 
             if ((!isPaused) && (useLiveInputStream))
@@ -397,9 +417,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
             {
                 if (pauseIt)
                 {
-                    rememberState = _showVisMode;
+                    rememberState = prevShowVisMode;
                     textOutput.text = "Paused...";
-                    SetActive_DataVis(VisModes.ShowAll);
+                    SetActive_DataVis(VisModes.ShowOriginsAndDestinations);
                 }
                 else
                 {
