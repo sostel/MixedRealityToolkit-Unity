@@ -30,7 +30,7 @@ MonoBehaviour:
   enableTeleportSystem: 0
   teleportSystemType:
     reference: 
-  enableSpatialAwarenessSystem: 0
+  enableSpatialAwarenessSystem: 1
   spatialAwarenessSystemType:
     reference: Microsoft.MixedReality.Toolkit.SpatialAwareness.MixedRealitySpatialAwarenessSystem,
       Microsoft.MixedReality.Toolkit.Services.SpatialAwarenessSystem
