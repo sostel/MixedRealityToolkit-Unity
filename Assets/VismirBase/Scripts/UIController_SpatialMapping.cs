@@ -1,21 +1,25 @@
 ﻿using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.SpatialAwareness;
+using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
 
 public class UIController_SpatialMapping : MonoBehaviour
 {
-    public bool isSpatialMappingActive = false;
-    public bool isSpatialMeshVisible = false;
+    [SerializeField]
+    private bool enableOnStartup = false;
 
-    private bool prev_isSpatialMappingActive;
-    private bool prev_isSpatialMeshVisible;
+    private bool isSpatialMappingActive = false;
+    private bool isSpatialMeshVisible = false;
 
     private IMixedRealitySpatialAwarenessSystem spatialAwarenessSystem = null;
     protected IMixedRealitySpatialAwarenessSystem SpatialAwarenessSystem
     {
         get
         {
-            MixedRealityServiceRegistry.TryGetService<IMixedRealitySpatialAwarenessSystem>(out spatialAwarenessSystem);
+            if (spatialAwarenessSystem == null)
+            {
+                MixedRealityServiceRegistry.TryGetService<IMixedRealitySpatialAwarenessSystem>(out spatialAwarenessSystem);
+            }
             return spatialAwarenessSystem;
         }
     }
@@ -31,23 +35,12 @@ public class UIController_SpatialMapping : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private async void Start()
     {
-        UpdateToGivenStates();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Only update if something changed
-        if (prev_isSpatialMappingActive != isSpatialMappingActive)
+        if (enableOnStartup)
         {
-            UpdateSpatialAwarenessTracking(isSpatialMappingActive);
-        }
-
-        if (prev_isSpatialMeshVisible != isSpatialMeshVisible)
-        {
-            UpdateSpatialAwarenessVisibility(isSpatialMeshVisible);
+            await new WaitUntil(() => SpatialAwarenessSystem != null);
+            UpdateToGivenStates();
         }
     }
 
@@ -72,8 +65,7 @@ public class UIController_SpatialMapping : MonoBehaviour
                 SpatialAwarenessSystem.Disable();
             }
 
-            isSpatialMappingActive = enable; // Just in case this has been changed from within the code
-            prev_isSpatialMappingActive = enable;
+            isSpatialMappingActive = enable; 
         }
     }
 
@@ -109,8 +101,7 @@ public class UIController_SpatialMapping : MonoBehaviour
                 SpatialObserver.DisplayOption = SpatialAwarenessMeshDisplayOptions.None;
             }
 
-            isSpatialMeshVisible = enable; // Just in case this has been changed from within the code
-            prev_isSpatialMeshVisible = enable;
+            isSpatialMeshVisible = enable;             
         }
     }
 
