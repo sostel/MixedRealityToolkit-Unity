@@ -54,7 +54,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
                 else
                 {
                     // Show the object at the hit position of the user's eye gaze ray with the target.
-                    //gameObject.transform.position = EyeTrackingTarget.LookedAtPoint;
+                    // gameObject.transform.position = EyeTrackingTarget.LookedAtPoint;
                     gameObject.transform.position = InputSystem.EyeGazeProvider.GazeOrigin + InputSystem.EyeGazeProvider.GazeDirection.normalized * defaultDistanceInMeters;
                 }
             }
