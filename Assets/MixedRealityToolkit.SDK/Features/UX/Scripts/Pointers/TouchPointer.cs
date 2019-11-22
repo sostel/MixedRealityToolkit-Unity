@@ -45,15 +45,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 RayStabilizer.UpdateStability(Rays[0].Origin, Rays[0].Direction);
                 Rays[0].CopyRay(RayStabilizer.StableRay, PointerExtent);
 
-                if (MixedRealityRaycaster.DebugEnabled)
-                {
-                    Debug.DrawRay(RayStabilizer.StableRay.origin, RayStabilizer.StableRay.direction * PointerExtent, Color.green);
-                }
+                //if (MixedRealityRaycaster.DebugEnabled)
+                //{
+                //    Debug.DrawRay(RayStabilizer.StableRay.origin, RayStabilizer.StableRay.direction * PointerExtent, Color.green);
+                //}
             }
-            else if (MixedRealityRaycaster.DebugEnabled)
-            {
-                Debug.DrawRay(TouchRay.origin, TouchRay.direction * PointerExtent, Color.yellow);
-            }
+            //else if (MixedRealityRaycaster.DebugEnabled)
+            //{
+            //    Debug.DrawRay(TouchRay.origin, TouchRay.direction * PointerExtent, Color.yellow);
+            //}
         }
 
         /// <inheritdoc />

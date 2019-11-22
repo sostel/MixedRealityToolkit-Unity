@@ -17,7 +17,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         
         public void Start()
         {
+#if UNITY_WSA
             LoadNewScene();
+#endif
         }
 
         private void LoadNewScene()

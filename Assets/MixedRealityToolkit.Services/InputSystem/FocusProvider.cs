@@ -892,7 +892,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         continue;
                     }
 
-                    Debug.DrawRay(pointerData.StartPoint, (pointerData.Details.Point - pointerData.StartPoint), rayColor);
+                    //Debug.DrawRay(pointerData.StartPoint, (pointerData.Details.Point - pointerData.StartPoint), rayColor);
                 }
 #endif
             }

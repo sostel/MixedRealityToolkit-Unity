@@ -347,10 +347,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
         private void Update()
         {
-            if (MixedRealityRaycaster.DebugEnabled && gazeTransform != null)
-            {
-                Debug.DrawRay(GazeOrigin, (HitPosition - GazeOrigin), Color.white);
-            }
+            //if (MixedRealityRaycaster.DebugEnabled && gazeTransform != null)
+            //{
+            //    Debug.DrawRay(GazeOrigin, (HitPosition - GazeOrigin), Color.white);
+            //}
 
             // If flagged to do so (setCursorInvisibleWhenFocusLocked) and active (IsInteractionEnabled), set the visibility to !IsFocusLocked,
             // but don't touch the visibility when not active or not flagged.
@@ -391,12 +391,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
             float directionAdjustmentRate = Mathf.Clamp01(5f * Time.fixedDeltaTime);
 
             HeadMovementDirection = Vector3.Slerp(HeadMovementDirection, newHeadMoveDirection, directionAdjustmentRate);
-
-            if (MixedRealityRaycaster.DebugEnabled && gazeTransform != null)
-            {
-                Debug.DrawLine(lastHeadPosition, lastHeadPosition + HeadMovementDirection * 10f, Color.Lerp(Color.red, Color.green, multiplier));
-                Debug.DrawLine(lastHeadPosition, lastHeadPosition + HeadVelocity, Color.yellow);
-            }
         }
 
         /// <inheritdoc />

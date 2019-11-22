@@ -42,7 +42,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
 
         public IMixedRealityEyeSaccadeProvider SaccadeProvider => this;
 
-        private readonly float smoothFactorNormalized = 0.96f;
+        private readonly float smoothFactorNormalized = 0.85f;
         private readonly float saccadeThreshInDegree = 2.5f; // In degrees (not radians)
 
         private Ray? oldGaze;

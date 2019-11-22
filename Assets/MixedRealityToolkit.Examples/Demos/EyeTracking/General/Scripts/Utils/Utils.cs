@@ -114,6 +114,11 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             return (2 * Mathf.Tan(Mathf.Deg2Rad * visAngleInDegrees / 2) * distInMeters);
         }
 
+        public static float VisAngleInMetersToDegrees(float visAngleInMeters, float distInMeters)
+        {
+            return 2 * Mathf.Atan(visAngleInMeters / (2 * distInMeters)) / Mathf.Deg2Rad;
+        }
+
         /// <summary>
         /// Loads a Unity scene with the given name.
         /// </summary>

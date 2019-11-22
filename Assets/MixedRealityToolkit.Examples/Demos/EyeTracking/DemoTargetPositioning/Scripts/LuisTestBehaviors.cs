@@ -145,7 +145,7 @@ public class LuisTestBehaviors : MonoBehaviour
         {
             if ((InputSystem != null) && (InputSystem.EyeGazeProvider != null))
             {
-                return inputSystem.EyeGazeProvider.HitInfo.target;
+                return inputSystem.EyeGazeProvider.HitInfo.collider.gameObject;
             }
 
             return null;

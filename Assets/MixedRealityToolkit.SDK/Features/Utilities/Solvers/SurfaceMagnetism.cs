@@ -442,11 +442,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
                 return;
             }
 
-            if (DebugEnabled)
-            {
-                Debug.DrawLine(currentRayStep.Origin, currentRayStep.Terminus, Color.magenta);
-            }
-
             switch (RaycastMode)
             {
                 case SceneQueryType.SimpleRaycast:
@@ -721,29 +716,14 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
             if (lowIndex != -1)
             {
-                if (debugEnabled)
-                {
-                    Debug.DrawLine(closestPoint, positions[lowIndex], Color.red);
-                }
-
                 if (highIndex != -1)
                 {
-                    if (debugEnabled)
-                    {
-                        Debug.DrawLine(closestPoint, positions[highIndex], Color.green);
-                    }
-
                     placementNormal = Vector3.Cross(positions[lowIndex] - closestPoint, positions[highIndex] - closestPoint).normalized;
                 }
                 else
                 {
                     Vector3 planeUp = Vector3.Cross(positions[lowIndex] - closestPoint, direction);
                     placementNormal = Vector3.Cross(positions[lowIndex] - closestPoint, constrainVertical ? Vector3.up : planeUp).normalized;
-                }
-
-                if (debugEnabled)
-                {
-                    Debug.DrawLine(closestPoint, closestPoint + placementNormal, Color.blue);
                 }
             }
             else
@@ -758,10 +738,10 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
             plane = new Plane(placementNormal, closestPoint);
 
-            if (debugEnabled)
-            {
-                Debug.DrawRay(closestPoint, placementNormal, Color.cyan);
-            }
+            //if (debugEnabled)
+            //{
+            //    Debug.DrawRay(closestPoint, placementNormal, Color.cyan);
+            //}
 
             // Figure out how far the plane should be.
             if (!useClosestDistance && closestPointIdx >= 0)

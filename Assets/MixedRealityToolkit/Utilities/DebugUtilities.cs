@@ -72,7 +72,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
             {
                 Vector3 a = point + size * axes[i];
                 Vector3 b = point - size * axes[i];
-                Debug.DrawLine(a, b, color);
+                //Debug.DrawLine(a, b, color);
             }
         }
 

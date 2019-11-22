@@ -64,6 +64,8 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         [SerializeField]
         private MixedRealityInputAction selectAction = MixedRealityInputAction.None;
 
+        private bool finished = false;
+
         private void Start()
         {
             // Save original colors for resetting after highlighting them
@@ -76,6 +78,32 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             {
                 ResetIterator();
                 notInitializedYet = false;
+                TargetingStudyManager.Instance?.UpdateTarget(CurrentTarget);
+            }
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.M))
+            {
+                if (!finished)
+                {
+                    ProceedToNextTargetInternal();
+                }
+                else
+                {
+                    Debug.Log("You are already done!");
+                }
+            }
+        }
+
+        public void ProceedToNextTarget()
+        {
+            Debug.Log("ProceedToNextTarget");
+            if (!finished)
+            {
+                ProceedToNextTargetInternal();
+            }
+            else
+            {
+                Debug.Log("You are already done!");
             }
         }
 
@@ -117,28 +145,33 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         /// Proceed to the next target. If the end is reached, fire an event that the target group has been fully 
         /// iterated and restart the scene.
         /// </summary>
-        private void ProceedToNextTarget()
+        private void ProceedToNextTargetInternal()
         {
             Debug.Log("[TargetGroupIterator] >> Next target: " + currTargetIndex + " / " + nrOfTargetsToSelect);
 
             ResetAmountOfTries();
             Fire_OnTargetSelected();
 
-            if (currTargetIndex < nrOfTargetsToSelect - 1)
+            if (currTargetIndex < nrOfTargetsToSelect )
             {
                 // 1. Let's reset the highlight for the last target.
                 HideHighlights();
 
                 // 2. If "DisableDistractors" is true then let's hide the selected target
                 if (DeactiveDistractors)
+                {
                     CurrentTarget.gameObject.SetActive(false);
+                }
 
                 // 3. Let's update to highlight the new target.
                 currTargetIndex++;
                 ShowHighlights();
+                TargetingStudyManager.Instance.UpdateTarget(CurrentTarget);
             }
             else // At the end
             {
+                Debug.Log("[TargetGroupIterator] >> DONE! " + currTargetIndex + " / " + nrOfTargetsToSelect);
+                finished = true;
                 // Fire an event to inform listeners that all targets have been iterated through.
                 Fire_OnAllTargetsSelected();
 
@@ -147,7 +180,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
 
                 // If a scene is given, reload the scene after a short timeout.
                 if (SceneToLoadOnFinish != "")
+                {
                     StartCoroutine(EyeTrackingDemoUtils.LoadNewScene(SceneToLoadOnFinish, 0.1f));
+                }
             }
         }
 
@@ -167,9 +202,13 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             get
             {
                 if (currTargetIndex > 0)
+                {
                     return targets[currTargetIndex - 1];
+                }
                 else
+                {
                     return null;
+                }
             }
         }
 
@@ -202,7 +241,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         private void HighlightTarget()
         {
             if (CurrentTarget == null)
-                ProceedToNextTarget();
+            {
+                ProceedToNextTargetInternal();
+            }
 
             CurrentTarget.gameObject.SetActive(true);
             HighlightTarget(highlightColor);
@@ -314,7 +355,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
                     // Once a target has been selected, check whether this is the correct target and proceed to highlighting the next one. 
                     if (eventData.selectedObject == targets[currTargetIndex])
                     {
-                        ProceedToNextTarget();
+                        ProceedToNextTargetInternal();
                         return;
                     }
 
@@ -324,7 +365,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
                     if (countSelectionTries >= maxNumberOfTries)
                     {
                         Debug.Log("TargetGridIterator >> Show next target - Too many tries [Amount triggered].");
-                        ProceedToNextTarget();
+                        ProceedToNextTargetInternal();
                     }
                 }
             }

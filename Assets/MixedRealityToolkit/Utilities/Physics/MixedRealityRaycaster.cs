@@ -40,11 +40,6 @@ namespace Microsoft.MixedReality.Toolkit.Physics
         /// <returns>Whether or not the raycast hit something.</returns>
         public static bool RaycastBoxPhysicsStep(RayStep step, Vector3 extents, Vector3 targetPosition, Matrix4x4 matrix, float maxDistance, LayerMask[] prioritizedLayerMasks, int raysPerEdge, bool isOrthographic, bool focusIndividualCompoundCollider, out Vector3[] points, out Vector3[] normals, out bool[] hits)
         {
-            if (Application.isEditor && DebugEnabled)
-            {
-                Debug.DrawLine(step.Origin, step.Origin + step.Direction * 10.0f, Color.green);
-            }
-
             extents /= (raysPerEdge - 1);
 
             int halfRaysPerEdge = (int)((raysPerEdge - 1) * 0.5f);
@@ -80,18 +75,6 @@ namespace Microsoft.MixedReality.Toolkit.Physics
                         hitSomething = true;
                         points[index] = rayHit.point;
                         normals[index] = rayHit.normal;
-
-                        if (Application.isEditor && DebugEnabled)
-                        {
-                            Debug.DrawLine(origin, points[index], Color.yellow);
-                        }
-                    }
-                    else
-                    {
-                        if (Application.isEditor && DebugEnabled)
-                        {
-                            Debug.DrawLine(origin, origin + direction * 3.0f, Color.gray);
-                        }
                     }
 
                     index++;

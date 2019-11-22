@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.MixedReality.Toolkit.Examples;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static LuisManager;
@@ -16,12 +17,13 @@ public class LuisCustomInterpreter : MonoBehaviour
 
     public void ProcessLUISResponse(ResponseFromLUIS aQuery)
     {
+        VoiceHistory.Instance?.Remember(DateTime.UtcNow, aQuery.query.ToString(), VoiceDictationStatus.LUIS_QueryReceived);
         Debug.Log(">> ProcessLUISResponse triggered!");
-
+                
+        Debug.Log($">> -- Query: {aQuery.query.ToString()}");
         Debug.Log($">> -- Intent: {aQuery.topScoringIntent.intent}");
         Debug.Log($">> -- # of entities: {aQuery.entities.Length}");
         
-
         string topIntent = aQuery.topScoringIntent.intent;
 
         // Create a dictionary of entities associated with their type
@@ -77,5 +79,7 @@ public class LuisCustomInterpreter : MonoBehaviour
                 }
                 break;
         }
+
+        VoiceHistory.Instance?.Remember(DateTime.UtcNow, aQuery.topScoringIntent.intent, VoiceDictationStatus.LUIS_IntentRecognized);
     }
 }

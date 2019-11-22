@@ -1,14 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Microsoft.MixedReality.Toolkit.Examples;
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Windows.Speech;
 
 public class MicrophoneManager : MonoBehaviour
 {
+    [SerializeField]
+    private string VoiceCommand = "Select";
+
+    public UnityEvent OnVoiceCommandRecognized;
+
     public TextMesh dictationText; // Text game object to provide feedback on the dictation result
 
     private DictationRecognizer dictationRecognizer;  // Component converting speech to text
-
+    
     #region Singleton
     private static MicrophoneManager instance;
     public static MicrophoneManager Instance
@@ -23,9 +30,9 @@ public class MicrophoneManager : MonoBehaviour
         }
     }
     #endregion
-
-
+    
     bool isSupposedToCapture = false;
+
     void Start()
     {
         TryStartCapturingAudio();
@@ -35,7 +42,7 @@ public class MicrophoneManager : MonoBehaviour
     {
         if (isSupposedToCapture && (dictationRecognizer.Status != SpeechSystemStatus.Running))
         {
-            Debug.Log("Hm... something WEIRD happened! " + dictationRecognizer.Status);
+            Debug.Log("Hm... something WEIRD happened! (1) " + dictationRecognizer.Status);
             TryStartCapturingAudio();
         }
     }
@@ -45,10 +52,10 @@ public class MicrophoneManager : MonoBehaviour
     {
         if (isSupposedToCapture && (dictationRecognizer.Status != SpeechSystemStatus.Running))
         {
-            Debug.Log("Hm... something WEIRD happened! " + dictationRecognizer.Status);
+            Debug.Log("Hm... something WEIRD happened! (2) " + dictationRecognizer.Status);
             TryStartCapturingAudio();
         }
-       // Debug.Log("justatest " + dictationRecognizer.Status );
+       
         yield return new WaitForSeconds(1);
     }
 
@@ -80,6 +87,7 @@ public class MicrophoneManager : MonoBehaviour
                     dictationRecognizer.DictationHypothesis += DictationRecognizer_DictationHypothesis;
                     dictationRecognizer.DictationResult += DictationRecognizer_DictationResult;
                     dictationRecognizer.DictationError += DictationRecognizer_DictationError;
+                    dictationRecognizer.DictationComplete += DictationRecognizer_DictationComplete;
                 }
 
                 StartCoroutine(TryStartDictation());
@@ -87,6 +95,10 @@ public class MicrophoneManager : MonoBehaviour
         }
     }
 
+    private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
+    {
+        Debug.Log($">> DictationCompletionCause: {cause}");
+    }
 
     IEnumerator TryStartDictation()
     {
@@ -97,14 +109,27 @@ public class MicrophoneManager : MonoBehaviour
             yield return null;
         }
 
+        dictationStatus = VoiceDictationStatus.Unknown;
         dictationRecognizer.Start();
         isSupposedToCapture = true;
         dictationText.text = "...";
         yield return null;
     }
 
+    VoiceDictationStatus dictationStatus = VoiceDictationStatus.Unknown;
     private void DictationRecognizer_DictationHypothesis(string dictationCaptured)
     {
+        if ((dictationStatus != VoiceDictationStatus.Dictation_HypothesisStart) && (dictationStatus != VoiceDictationStatus.Dictation_HypothesisCont))
+        {
+            dictationStatus = VoiceDictationStatus.Dictation_HypothesisStart;
+        }
+        else
+        {
+            dictationStatus = VoiceDictationStatus.Dictation_HypothesisCont;
+        }
+
+        VoiceHistory.Instance.Remember(DateTime.UtcNow, dictationCaptured, dictationStatus);
+
         string msg = ">> [DictationHypothesis]: " + dictationCaptured;
         Debug.Log(msg);
         dictationText.text = msg;
@@ -134,11 +159,27 @@ public class MicrophoneManager : MonoBehaviour
     /// </summary>
     private void DictationRecognizer_DictationResult(string dictationCaptured, ConfidenceLevel confidence)
     {
+        switch (confidence)
+        {
+            case ConfidenceLevel.High: dictationStatus = VoiceDictationStatus.Dictation_Result_High; break;
+            case ConfidenceLevel.Low: dictationStatus = VoiceDictationStatus.Dictation_Result_Low; break;
+            case ConfidenceLevel.Medium: dictationStatus = VoiceDictationStatus.Dictation_Result_Medium; break;
+            case ConfidenceLevel.Rejected: dictationStatus = VoiceDictationStatus.Dictation_Result_Rejected; break;
+        }
+       
+        VoiceHistory.Instance.Remember(DateTime.UtcNow, dictationCaptured, dictationStatus);
+        
         StopCapturingAudio();
         StartCoroutine(LuisManager.Instance.SubmitRequestToLUIS(dictationCaptured, TryStartCapturingAudio));
 
         string msg = ">> [DictationResult]: " + dictationCaptured;
         Debug.Log(msg);
+
+        if (dictationCaptured == VoiceCommand)
+        {
+            OnVoiceCommandRecognized.Invoke();
+        }
+
         dictationText.text = msg;
     }
 

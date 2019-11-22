@@ -98,3 +98,12 @@ MonoBehaviour:
   - id: 28
     description: DisableDwellActivation
     axisConstraint: 0
+  - id: 29
+    description: TestTrigger
+    axisConstraint: 0
+  - id: 30
+    description: New Action 30
+    axisConstraint: 0
+  - id: 31
+    description: New Action 31
+    axisConstraint: 0

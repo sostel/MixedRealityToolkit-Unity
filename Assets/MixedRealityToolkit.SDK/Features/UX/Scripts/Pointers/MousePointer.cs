@@ -26,10 +26,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
             Ray ray = new Ray(transform.position, transform.forward);
             Rays[0].CopyRay(ray, PointerExtent);
 
-            if (MixedRealityRaycaster.DebugEnabled)
-            {
-                Debug.DrawRay(ray.origin, ray.direction * PointerExtent, Color.green);
-            }
+            //if (MixedRealityRaycaster.DebugEnabled)
+            //{
+            //    Debug.DrawRay(ray.origin, ray.direction * PointerExtent, Color.green);
+            //}
         }
 
         #region IMixedRealityInputHandler Implementation

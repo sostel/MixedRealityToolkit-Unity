@@ -165,8 +165,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
             _target.transform.localScale = tmpTargetSizeInMeters;
 
             // Name it
-            _target.name = string.Format("target_r{0}_t{1}", radius, iTarget);
-
+            //_target.name = string.Format("target_r{0}_t{1}", radius, iTarget);
+            _target.name = string.Format("t{1}", radius, iTarget);
+            
             // Assign parent
             _target.transform.SetParent(transform);
 

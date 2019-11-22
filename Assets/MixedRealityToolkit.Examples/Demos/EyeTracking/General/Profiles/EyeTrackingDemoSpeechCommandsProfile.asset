@@ -150,16 +150,16 @@ MonoBehaviour:
       description: StartReplayData
       axisConstraint: 0
   - localizationKey: 
-    keyword: Enable dwell
-    keyCode: 121
+    keyword: Test1
+    keyCode: 122
     action:
-      id: 27
-      description: EnableDwellActivation
+      id: 29
+      description: TestTrigger
       axisConstraint: 0
   - localizationKey: 
-    keyword: Disable dwell
+    keyword: Test2
     keyCode: 120
     action:
-      id: 28
-      description: DisableDwellActivation
+      id: 29
+      description: TestTrigger
       axisConstraint: 0
