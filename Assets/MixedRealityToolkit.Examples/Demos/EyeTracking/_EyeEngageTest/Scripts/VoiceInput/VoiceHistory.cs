@@ -87,15 +87,14 @@ namespace Microsoft.MixedReality.Toolkit.Examples
 
             if (result == 0)
             {
+                string sdate = date.ToString("HH:mm.ss:FFF");
+
                 VoiceHistoryEntry memory = new VoiceHistoryEntry();
                 memory.timestamp = date;
                 memory.dictationText = text;
                 memory.dictationStatus = status;
 
-                string sdate = date.ToString("HH:mm.ss:FFF");
-                Debug.Log($"VoiceHist -> Add: [{sdate}] - {text}");
                 history.Add(date, memory);
-
                 OnNewDataReceived.Invoke();
 
                 if (status == VoiceDictationStatus.Dictation_HypothesisStart)

@@ -24,7 +24,6 @@ public class DelayedInputTrigger : MonoBehaviour
 
     public void TriggerVoiceInput(string sourceName)
     {
-        Debug.Log($"gfh30 TriggerVoiceInput.");
         DateTime? dt = VoiceHistory.Instance.HypothesisStart();
 
         if (dt != null)
@@ -42,30 +41,30 @@ public class DelayedInputTrigger : MonoBehaviour
         yield return new WaitForSeconds(delayInSec);
 
         // Code to execute after the delay
-        if (GazeHistory.Instance != null)
+        if (EyeGazeHistory.Instance != null)
         {
-            CurrentTarget = GazeHistory.Instance.GetLookedAtTarget(DateTime.UtcNow);
-            PredictedTarget = GazeHistory.Instance.GetLookedAtTarget(dtInputArrived);
+            CurrentTarget = EyeGazeHistory.Instance.GetLookedAtTarget(DateTime.UtcNow);
+            PredictedTarget = EyeGazeHistory.Instance.GetLookedAtTarget(dtInputArrived);
             OnTrigger.Invoke();
         }
     }
 
     public void UpdatePredictedTarget_UsingGazePoints(DateTime dateTime)
     {
-        if (GazeHistory.Instance != null)
+        if (EyeGazeHistory.Instance != null)
         {
-            CurrentTarget = GazeHistory.Instance.GetLookedAtTarget(DateTime.UtcNow);
-            PredictedTarget = GazeHistory.Instance.GetLookedAtTarget(dateTime);
+            CurrentTarget = EyeGazeHistory.Instance.GetLookedAtTarget(DateTime.UtcNow);
+            PredictedTarget = EyeGazeHistory.Instance.GetLookedAtTarget(dateTime);
             OnTrigger.Invoke();
         }
     }
 
     public void UpdatePredictedTarget_UsingFixations(DateTime dateTime)
     {
-        if (GazeHistory.Instance != null)
+        if (EyeGazeHistory.Instance != null)
         {
-            CurrentTarget = GazeHistory.Instance.GetFixatedTarget(DateTime.UtcNow);
-            PredictedTarget = GazeHistory.Instance.GetFixatedTarget(dateTime);
+            CurrentTarget = EyeGazeHistory.Instance.GetFixatedTarget(DateTime.UtcNow);
+            PredictedTarget = EyeGazeHistory.Instance.GetFixatedTarget(dateTime);
             OnTrigger.Invoke();
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TestFixation01 : MonoBehaviour
+public class Test_FixationsHistory : MonoBehaviour
 {
 
     public float scoreIncr = 2;
@@ -11,25 +11,25 @@ public class TestFixation01 : MonoBehaviour
     public float maxScore = 30 * 5f; // FPS * timewindow in seconds
 
     public GameObject FixationIndicator;
+    public ParticleSystem fixationParticles;
 
     private Dictionary<GameObject, float> lossyInterest = new Dictionary<GameObject, float>();
-
+       
 
     public void Start()
     {
         lossyInterest = new Dictionary<GameObject, float>();
-        GazeHistory.Instance.HistoryUpdated.AddListener(HandleNewGaze);
+        EyeGazeHistory.Instance.OnHistoryUpdated.AddListener(HandleNewGaze);
     }
 
     private void HandleNewGaze()
     {
-        // Handle fixations
-        // The currently looked at target increases its interest, whereas all other targets decrease it
-        // Problem with this approach: Biased towards larger targets. Does not take into account if I was quickly looking around a target
-
+        // Handle fixations independent from specific targets. 
+        // If a person is looking in a certain area for a specific amount of time, consider it to be a fixation.
+        
         // --------------------------------------------------------------------------
         // Increase interest for looked at target
-        GameObject gobj = GazeHistory.Instance.GetMostRecentLookedAtTarget();
+        GameObject gobj = EyeGazeHistory.Instance.GetMostRecentLookedAtTarget();
         if (gobj != null)
         {
             if (lossyInterest.ContainsKey(gobj))
@@ -73,10 +73,10 @@ public class TestFixation01 : MonoBehaviour
 
         // --------------------------------------------------------------------------
         // Identify fixation at certain time        
-        GetFixatedTarget();
+        GetFixation();
     }
 
-    public GameObject GetFixatedTarget()
+    public GameObject GetFixation()
     {
         try
         {

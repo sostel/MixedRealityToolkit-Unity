@@ -130,8 +130,8 @@ public class MicrophoneManager : MonoBehaviour
 
         VoiceHistory.Instance.Remember(DateTime.UtcNow, dictationCaptured, dictationStatus);
 
-        string msg = ">> [DictationHypothesis]: " + dictationCaptured;
-        Debug.Log(msg);
+        string msg = ">> [Hypothesis]: " + dictationCaptured;
+        //Debug.Log(msg);
         dictationText.text = msg;
     }
 

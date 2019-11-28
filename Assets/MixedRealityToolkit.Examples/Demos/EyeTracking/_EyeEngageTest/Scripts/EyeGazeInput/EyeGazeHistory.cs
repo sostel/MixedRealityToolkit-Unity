@@ -6,43 +6,36 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GazeHistoryEntry
-{
-    public DateTime timestamp;
-    public Ray eyeGaze;
-    public RaycastHit hitInfo;
-    public GameObject lookedAtTarget;
-}
-
-public class GazeHistory : MonoBehaviour
+public class EyeGazeHistory : MonoBehaviour
 {
     #region Singleton
-    private static GazeHistory instance;
-    public static GazeHistory Instance
+    private static EyeGazeHistory instance;
+    public static EyeGazeHistory Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<GazeHistory>();
+                instance = FindObjectOfType<EyeGazeHistory>();
             }
             return instance;
         }
     }
     #endregion
 
-    internal Dictionary<DateTime, GazeHistoryEntry> History { get; private set; }
+    internal Dictionary<DateTime, EyeGazeHistoryEntry> History { get; private set; }
 
     [SerializeField]
     private float maxMemoryInSeconds = 3f;
 
-    internal UnityEvent HistoryUpdated = new UnityEvent();
-    
+    internal UnityEvent OnHistoryUpdated = new UnityEvent();
+
+
     private IMixedRealityEyeGazeProvider eyeProvider
     {
         get
         {
-           return CoreServices.InputSystem?.EyeGazeProvider; // Warning: It may be better to load the reference once in the beginning for performance? 
+            return CoreServices.InputSystem?.EyeGazeProvider; // Warning: It may be better to load the reference once in the beginning for performance? 
         }
     }
 
@@ -55,7 +48,11 @@ public class GazeHistory : MonoBehaviour
     {
         Remember();
         ForgetOverTime();
-        HistoryUpdated.Invoke();
+
+        if (OnHistoryUpdated != null)
+        {
+            OnHistoryUpdated.Invoke();
+        }
     }
 
     private void ForgetOverTime()
@@ -71,17 +68,17 @@ public class GazeHistory : MonoBehaviour
 
     public void ResetHistory()
     {
-        History = new Dictionary<DateTime, GazeHistoryEntry>();
+        History = new Dictionary<DateTime, EyeGazeHistoryEntry>();
     }
-        
-    public void Remember()
+
+    private void Remember()
     {
         DateTime date = eyeProvider.Timestamp;
         int result = History.Keys.Where(x => x > date).Count();
 
         if (result == 0)
         {
-            GazeHistoryEntry ghe = new GazeHistoryEntry();
+            EyeGazeHistoryEntry ghe = new EyeGazeHistoryEntry();
             ghe.lookedAtTarget = EyeTrackingTarget.LookedAtTarget;
             ghe.eyeGaze = new Ray(eyeProvider.GazeOrigin, eyeProvider.GazeDirection);
             History.Add(eyeProvider.Timestamp, ghe);
@@ -90,19 +87,17 @@ public class GazeHistory : MonoBehaviour
 
     public GameObject GetLookedAtTarget(DateTime date)
     {
-        GazeHistoryEntry gazeHistoryEntry = GetEntry(date);
+        EyeGazeHistoryEntry gazeHistoryEntry = GetEntry(date);
         return ((gazeHistoryEntry != null) ? gazeHistoryEntry.lookedAtTarget : null);
     }
 
-    public GazeHistoryEntry GetEntry(DateTime date)
+    public EyeGazeHistoryEntry GetEntry(DateTime date)
     {
         DateTime result = History.Keys.Where(x => x <= date).Max(); // Warning: Not the most efficient!?
-        GazeHistoryEntry gazeHistoryEntry;
+        EyeGazeHistoryEntry gazeHistoryEntry;
         bool check = History.TryGetValue(result, out gazeHistoryEntry);
-
         gazeHistoryEntry.timestamp = result;
 
-        Debug.Log($"GazeHist: [{check}] -- {gazeHistoryEntry.timestamp}");
         if (check)
         {
             return gazeHistoryEntry;
@@ -116,17 +111,17 @@ public class GazeHistory : MonoBehaviour
         return GetLookedAtTarget(DateTime.UtcNow);
     }
 
-    public GazeHistoryEntry GetMostRecentEntry()
+    public EyeGazeHistoryEntry GetMostRecentEntry()
     {
         return GetEntry(DateTime.UtcNow);
     }
-    
-    public GameObject GetFixatedTarget (DateTime date)
+
+    public GameObject GetFixatedTarget(DateTime date)
     {
         GameObject lookedAtTarget = null;
 
         DateTime[] results = (DateTime[])History.Keys.Where(x => x <= date); // Warning: Not the most efficient!?
- ///??
+                                                                             ///??
         return lookedAtTarget;
     }
 }
