@@ -3,8 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Test_FixationsHistory : MonoBehaviour
+public class FixationTester_PerCluster : MonoBehaviour
 {
+    #region Singleton
+    private static FixationTester_PerCluster instance;
+    public static FixationTester_PerCluster Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<FixationTester_PerCluster>();
+            }
+            return instance;
+        }
+    }
+    #endregion
 
     public float scoreIncr = 2;
     public float scoreDecr = 1;

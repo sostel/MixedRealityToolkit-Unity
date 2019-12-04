@@ -91,3 +91,4 @@ doc/
 /MSBuild/
 /PackagesCopy/
 !/scripts/Packaging/NuGetRestoreProject.csproj
+*.csv

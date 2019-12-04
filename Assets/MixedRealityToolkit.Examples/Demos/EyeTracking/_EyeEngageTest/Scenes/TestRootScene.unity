@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 17560676}
   - component: {fileID: 17560675}
   m_Layer: 0
-  m_Name: ind_predicted
+  m_Name: indicator_2_pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10105,7 +10105,7 @@ GameObject:
   - component: {fileID: 915628941}
   - component: {fileID: 915628940}
   m_Layer: 0
-  m_Name: 22
+  m_Name: bgrnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17891,7 +17891,7 @@ GameObject:
   - component: {fileID: 1460492875}
   - component: {fileID: 1460492874}
   m_Layer: 0
-  m_Name: ind_curr
+  m_Name: indicator_1_pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20745,6 +20745,7 @@ GameObject:
   - component: {fileID: 2011190083}
   - component: {fileID: 2011190085}
   - component: {fileID: 2011190086}
+  - component: {fileID: 2011190087}
   m_Layer: 0
   m_Name: InputHandlers
   m_TagString: Untagged
@@ -20823,19 +20824,33 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011190081}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa765db66f68d4e45a91344f290af8c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxMemoryInSeconds: 10
-  minFixationInSeconds: 0.15
-  maxFixationInSeconds: 1
-  fixationIndicatorTemplate: {fileID: 0}
+  minFixationInSeconds: 1
+  maxFixationInSeconds: 2
+  fixationIndicatorTemplate: {fileID: 827144268}
   maxAmountOfFixationIndicators: 100
   clearIndicators: 0
   delayInSeconds: 0
   previousLookedAtTarget: {fileID: 0}
+--- !u!114 &2011190087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011190081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308239932c7a1b94985aefefb63acc73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minFixationTimeInMs: 150
+  indicator: {fileID: 17560673}
 --- !u!1001 &2045373140
 PrefabInstance:
   m_ObjectHideFlags: 0

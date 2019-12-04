@@ -46,6 +46,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
                 "LookedAtTarget",
                 // Study
                 "IntendedTarget",
+                // Fixation testers
+                "FixatedTarget",
+
                 // Voice input
                 "Voice.LastUpdated",
                 "Voice.Text",
@@ -80,7 +83,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
 
             // Voice input
             VoiceHistoryEntry voiceMemory = VoiceHistory.Instance.GetMostRecentEntry();
-            
+
             // Put it all together
             object[] data = new object[]
             { 
@@ -109,6 +112,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
                 lookedAtTarget,
                 TargetingStudyManager.Instance.IntendedTarget.name,
 
+                // Fixation testers
+                FixationTester_PerTarget2.Instance?.FixationTargetName,
+
                 // Voice input
                 voiceMemory.timestamp,
                 voiceMemory.dictationText,
@@ -116,10 +122,12 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking.Logging
             };
 
             // Targeting prediction approaches
-            List<object> data2 = new List<object>();
-            data2.AddRange(data);
-            data2.AddRange(TargetingStudyManager.Instance.GetListOfPredictedTargetNames());
-            return data2.ToArray();
+            //List<object> data2 = new List<object>();
+            //data2.AddRange(data);
+            //data2.AddRange(TargetingStudyManager.Instance.GetListOfPredictedTargetNames());
+            //return data2.ToArray();
+
+            return data;
         }
     }
 }

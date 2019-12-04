@@ -8,8 +8,23 @@ using UnityEngine;
 /// TestFixation01 only allowed to get the targets which raised interest right now. 
 /// TestFixation02 allows for issuing a date and to get back the targets of interest at that time. 
 /// </summary>
-public class Test_FixatedTargetsHistory : MonoBehaviour
+public class FixationTester_PerTarget : MonoBehaviour
 {
+    #region Singleton
+    private static FixationTester_PerTarget instance;
+    public static FixationTester_PerTarget Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<FixationTester_PerTarget>();
+            }
+            return instance;
+        }
+    }
+    #endregion
+
     [SerializeField]
     private float maxMemoryInSeconds = 10f;
 
@@ -17,7 +32,7 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
     private float minFixationInSeconds = 0.15f;
 
     [SerializeField]
-    private float maxFixationInSeconds = 1.0f;
+    private float maxFixationInSeconds = 1.0f; // TODO: Is this even necessary?
 
     [SerializeField]
     private GameObject fixationIndicatorTemplate = null;
@@ -30,7 +45,6 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
     private List<GameObject> fixationIndicators;
 
     public bool clearIndicators = false;
-
 
     public void Start()
     {
@@ -47,8 +61,6 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
             clearIndicators = false;
             ClearAllFixationIndicators();
         }
-
-
         ClearFixationIndicators();
     }
 
@@ -105,24 +117,17 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
         if (gazeHistEntry != null)
         {
             currInterestList.timestamp = gazeHistEntry.timestamp;
-            IncreaseInterest(gazeHistEntry.lookedAtTarget);
-            DecreaseInterest(gazeHistEntry.lookedAtTarget);
+            //IncreaseInterest(gazeHistEntry.lookedAtTarget);
+            //DecreaseInterest(gazeHistEntry.lookedAtTarget);
 
             FixatedGameObject newEntry = new FixatedGameObject();
             newEntry.UpdateDictionary(gazeHistEntry.timestamp, currInterestList.FixatedTargetsDic);
             fixationHistory.Add(newEntry.timestamp, newEntry);
 
-            Debug.Log($">> [FiX-2] 11-gazeHistEntry.timestamp: {gazeHistEntry.timestamp} >>");
-            Debug.Log($">> [FiX-2] 11-AddTimeStamp: {currInterestList.timestamp} >>");
-
-
             // --------------------------------------------------------------------------
             // Identify fixation at certain time        
-            // Test
             //  GetFixatedTarget(currInterestList, true);
-
-
-
+            
             DateTime dt1 = DateTime.UtcNow;
             DateTime dt = dt1.AddSeconds(-delayInSeconds);
             GetFixatedTarget(dt);
@@ -169,21 +174,27 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
         {
             if (currInterestList.FixatedTargetsDic.ContainsKey(currTarget))
             {
-                currInterestList.FixatedTargetsDic[currTarget] += (float)Increase_DeltaFixationTimeInSeconds(currTarget);
-                if (currInterestList.FixatedTargetsDic[currTarget] > maxFixationInSeconds)
+                if (currTarget != previousLookedAtTarget)
                 {
-                    currInterestList.FixatedTargetsDic[currTarget] = maxFixationInSeconds;
-                }
-
-                if (currInterestList.FixatedTargetsDic[currTarget] > minFixationInSeconds)
-                {
-                    Debug.Log($">> INCR >> [{currTarget.name}]: {currInterestList.FixatedTargetsDic[currTarget]} [Fixation!]");
+                    currInterestList.FixatedTargetsDic[currTarget] = 0;
                 }
                 else
                 {
-                    Debug.Log($">> INCR >> [{currTarget.name}]: {currInterestList.FixatedTargetsDic[currTarget]} [?]");
+                    currInterestList.FixatedTargetsDic[currTarget] += (float)Increase_DeltaFixationTimeInSeconds(currTarget);
+                    if (currInterestList.FixatedTargetsDic[currTarget] > maxFixationInSeconds)
+                    {
+                        currInterestList.FixatedTargetsDic[currTarget] = maxFixationInSeconds;
+                    }
+
+                    if (currInterestList.FixatedTargetsDic[currTarget] > minFixationInSeconds)
+                    {
+                        Debug.Log($">> INCR >> [{currTarget.name}]: {currInterestList.FixatedTargetsDic[currTarget]} [Fixation!]");
+                    }
+                    else
+                    {
+                        Debug.Log($">> INCR >> [{currTarget.name}]: {currInterestList.FixatedTargetsDic[currTarget]} [?]");
+                    }
                 }
-                
             }
             else
             {
@@ -238,9 +249,7 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
 
                 float deltaTimeInSec = Mathf.Round((float)(DateTime.UtcNow - fixTargets.timestamp).TotalSeconds * 1000) / 1000f;
 
-                Debug.Log($">> ------------");
                 Debug.Log($">> [FiX-2] AND THE WINNER IS: {keyOfMaxValue.name} (Score: {fixTargets.FixatedTargetsDic.Values.Max()}) -- DeltaTime: {deltaTimeInSec}");
-                Debug.Log($">> ------------");
             }
 
             return keyOfMaxValue;
@@ -264,10 +273,7 @@ public class Test_FixatedTargetsHistory : MonoBehaviour
                     string sdatePast = date.ToString("HH:mm.ss:FFF");
                     string sdateQuery = result.ToString("HH:mm.ss:FFF");
                     string sdateNow = DateTime.UtcNow.ToString("HH:mm.ss:FFF");
-
-                    //historicFixations.timestamp = date;
                     float deltaTimeInSec = Mathf.Round((float)(DateTime.UtcNow - date).TotalSeconds * 1000f) / 1000f;
-                   // Debug.Log($">> [FiX-2] QUERY: {sdatePast} \t RESULT: {sdateQuery} \t NOW: {sdateNow} >> -- DeltaTime: {deltaTimeInSec}");
                     return GetFixatedTarget(historicFixations);
                 }
             }
