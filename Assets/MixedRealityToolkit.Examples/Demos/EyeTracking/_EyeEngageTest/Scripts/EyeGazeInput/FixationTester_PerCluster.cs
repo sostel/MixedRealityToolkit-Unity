@@ -33,7 +33,7 @@ public class FixationTester_PerCluster : MonoBehaviour
     public void Start()
     {
         lossyInterest = new Dictionary<GameObject, float>();
-        EyeGazeHistory.Instance.OnHistoryUpdated.AddListener(HandleNewGaze);
+        History_EyeGazeRaw.Instance.OnHistoryUpdated.AddListener(HandleNewGaze);
     }
 
     private void HandleNewGaze()
@@ -43,7 +43,7 @@ public class FixationTester_PerCluster : MonoBehaviour
         
         // --------------------------------------------------------------------------
         // Increase interest for looked at target
-        GameObject gobj = EyeGazeHistory.Instance.GetMostRecentLookedAtTarget();
+        GameObject gobj = History_EyeGazeRaw.Instance.GetMostRecentLookedAtTarget();
         if (gobj != null)
         {
             if (lossyInterest.ContainsKey(gobj))

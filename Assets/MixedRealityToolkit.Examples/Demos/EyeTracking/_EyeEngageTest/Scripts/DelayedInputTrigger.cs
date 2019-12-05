@@ -41,31 +41,31 @@ public class DelayedInputTrigger : MonoBehaviour
         yield return new WaitForSeconds(delayInSec);
 
         // Code to execute after the delay
-        if (EyeGazeHistory.Instance != null)
+        if (History_EyeGazeRaw.Instance != null)
         {
-            CurrentTarget = EyeGazeHistory.Instance.GetLookedAtTarget(DateTime.UtcNow);
-            PredictedTarget = EyeGazeHistory.Instance.GetLookedAtTarget(dtInputArrived);
+            CurrentTarget = History_EyeGazeRaw.Instance.GetLookedAtTargetAt(DateTime.UtcNow);
+            PredictedTarget = History_EyeGazeRaw.Instance.GetLookedAtTargetAt(dtInputArrived);
             OnTrigger.Invoke();
         }
     }
 
     public void UpdatePredictedTarget_UsingGazePoints(DateTime dateTime)
     {
-        if (EyeGazeHistory.Instance != null)
+        if (History_EyeGazeRaw.Instance != null)
         {
-            CurrentTarget = EyeGazeHistory.Instance.GetLookedAtTarget(DateTime.UtcNow);
-            PredictedTarget = EyeGazeHistory.Instance.GetLookedAtTarget(dateTime);
+            CurrentTarget = History_EyeGazeRaw.Instance.GetLookedAtTargetAt(DateTime.UtcNow);
+            PredictedTarget = History_EyeGazeRaw.Instance.GetLookedAtTargetAt(dateTime);
             OnTrigger.Invoke();
         }
     }
 
     public void UpdatePredictedTarget_UsingFixations(DateTime dateTime)
     {
-        if (EyeGazeHistory.Instance != null)
-        {
-            CurrentTarget = EyeGazeHistory.Instance.GetFixatedTarget(DateTime.UtcNow);
-            PredictedTarget = EyeGazeHistory.Instance.GetFixatedTarget(dateTime);
-            OnTrigger.Invoke();
-        }
+        //if (EyeGazeHistory.Instance != null)
+        //{
+        //    CurrentTarget = EyeGazeHistory.Instance.GetFixatedTarget(DateTime.UtcNow);
+        //    PredictedTarget = EyeGazeHistory.Instance.GetFixatedTarget(dateTime);
+        //    OnTrigger.Invoke();
+        //}
     }
 }
