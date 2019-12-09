@@ -21,13 +21,7 @@ public abstract class HistoryBase : MonoBehaviour
 
     public void Update()
     {
-        // Remember();
         ForgetOverTime();
-
-        if (OnHistoryUpdated != null)
-        {
-            OnHistoryUpdated.Invoke();
-        }
     }
 
     public void ResetHistory()
@@ -39,11 +33,20 @@ public abstract class HistoryBase : MonoBehaviour
 
     public void Remember(DateTime timestamp, InputMemory newMemory)
     {
-        int result = memories.Keys.Where(x => x > timestamp).Count();
+        if (memories == null)
+        {
+            ResetHistory();
+        }
 
+        int result = memories.Keys.Where(x => x > timestamp).Count();
         if (result == 0)
         {
             memories.Add(timestamp, newMemory);
+
+            if (OnHistoryUpdated != null)
+            {
+                OnHistoryUpdated.Invoke();
+            }
         }
     }
 
@@ -55,6 +58,11 @@ public abstract class HistoryBase : MonoBehaviour
         for (int i = 0; i < results.Count; i++)
         {
             memories.Remove(results[i]);
+
+            if (OnHistoryUpdated != null)
+            {
+                OnHistoryUpdated.Invoke();
+            }
         }
     }
 
@@ -77,4 +85,9 @@ public abstract class HistoryBase : MonoBehaviour
     {
         return GetMemoryAt(DateTime.UtcNow);
     }
+
+    public InputMemory[] GetHistory() 
+    {
+        return memories.Values.ToArray();
+    } 
 }

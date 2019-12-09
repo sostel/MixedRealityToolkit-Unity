@@ -113,7 +113,7 @@ public class FixationTester_PerTarget : MonoBehaviour
         // Handle fixations
         // The currently looked at target increases its interest, whereas all other targets decrease it
         // Problem with this approach: Biased towards larger targets. Does not take into account if I was quickly looking around a target
-        InputMemory_RawEyeGaze gazeHistEntry = History_EyeGazeRaw.Instance.GetMostRecentMemory();
+        InputMemory_EyeGazeRaw gazeHistEntry = (InputMemory_EyeGazeRaw)History_EyeGazeRaw.Instance.GetMostRecentMemory();
         if (gazeHistEntry != null)
         {
             currInterestList.timestamp = gazeHistEntry.timestamp;

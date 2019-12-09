@@ -21,7 +21,7 @@ public class History_EyeGazeRaw : HistoryBase
     }
     #endregion
 
-    private IMixedRealityEyeGazeProvider eyeProvider
+    private IMixedRealityEyeGazeProvider eyeGazeProvider
     {
         get
         {
@@ -29,26 +29,22 @@ public class History_EyeGazeRaw : HistoryBase
         }
     }
 
-    public UnityEvent 
-
     public new void Update()
     {
         Remember(); // ToDo: Would be nice to have an actual event that is triggered when the eye gaze ray has changed.
+        base.Update();
     }
 
     public override void Remember()
     {
-        InputMemory_EyeGazeRaw memory = new InputMemory_EyeGazeRaw();
-        memory.lookedAtTarget = EyeTrackingTarget.LookedAtTarget;
-        memory.eyeGaze = new Ray(eyeProvider.GazeOrigin, eyeProvider.GazeDirection);
-
-        Remember(eyeProvider.Timestamp, memory);
+        Remember(eyeGazeProvider.Timestamp, new InputMemory_EyeGazeRaw(
+            new Ray(eyeGazeProvider.GazeOrigin, eyeGazeProvider.GazeDirection), 
+            EyeTrackingTarget.LookedAtTarget, EyeTrackingTarget.LookedAtPoint));
     }
 
     public GameObject GetLookedAtTargetAt(DateTime date)
     {
-        InputMemory_EyeGazeRaw gazeHistoryEntry = GetMemoryAt(date);
-        return ((gazeHistoryEntry != null) ? gazeHistoryEntry.lookedAtTarget : null);
+        return ((InputMemory_EyeGazeRaw)this.GetMemoryAt(date))?.lookedAtTarget;
     }
 
     public GameObject GetMostRecentLookedAtTarget()

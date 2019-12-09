@@ -27,7 +27,8 @@ public class History_EyeGazeProcessed : History_EyeGazeRaw
 
     public void ProcessGazeData()
     {
-        Debug.Log($"New eye gaze data to process: {((InputMemory_EyeGazeRaw)GetMostRecentMemory()).timestamp} \t--> {((InputMemory_EyeGazeRaw)GetMostRecentMemory()).lookedAtTarget} ");
+        //Debug.Log($"New eye gaze data to process: {((InputMemory_EyeGazeRaw)GetMostRecentMemory()).timestamp.ToShortTimeString()} \t--> " +
+        //    $"{((InputMemory_EyeGazeRaw)GetMostRecentMemory()).lookedAtTarget} ");
 
         // TODO: Handle new eye gaze data -> Saccades, Fixations... If uncertain, mark as "PotentialFixation" and update later.
     }
