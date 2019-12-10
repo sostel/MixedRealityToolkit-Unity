@@ -52,6 +52,11 @@ public abstract class HistoryBase : MonoBehaviour
 
     protected void ForgetOverTime()
     {
+        if (memories == null)
+        {
+            ResetHistory();
+        }
+
         DateTime date = DateTime.UtcNow.AddSeconds(-maxMemoryInSeconds);
         List<DateTime> results = memories.Keys.Where(x => x <= date).ToList();
 
@@ -68,6 +73,11 @@ public abstract class HistoryBase : MonoBehaviour
 
     public InputMemory GetMemoryAt(DateTime date)
     {
+        if (memories == null)
+        {
+            ResetHistory();
+        }
+
         DateTime timestamp = memories.Keys.Where(x => x <= date).Max(); // Warning: Not the most efficient!?
         InputMemory memory;
         bool check = memories.TryGetValue(timestamp, out memory);

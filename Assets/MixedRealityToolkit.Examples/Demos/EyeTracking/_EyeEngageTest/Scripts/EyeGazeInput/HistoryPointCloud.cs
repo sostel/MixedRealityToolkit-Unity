@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class HistoryPointCloud : MonoBehaviour
+public abstract class HistoryPointCloud : MonoBehaviour
 {
     [SerializeField]
-    private ParticleSystem pointCloudParticleSystem;
+    internal ParticleSystem pointCloudParticleSystem;
 
     [SerializeField]
-    private History_EyeGazeRaw pointCloudData = null;
+    internal HistoryBase pointCloudData = null;
     
     [SerializeField]
-    private float pointSizeInMeters = .01f;
+    internal float pointSizeInMeters = .01f;
 
-    public bool isRunning = true;
+    [SerializeField]
+    internal bool isRunning = true;
 
     private ParticleSystem.EmissionModule emissionModule;
+
+    public Color color_Default = Color.gray;
     
     private void Start()
     {
@@ -33,27 +36,7 @@ public class HistoryPointCloud : MonoBehaviour
         }
     }
 
-    public void DisplayPointCloud()
-    {
-        ParticleSystem.Particle[] particleArray = new ParticleSystem.Particle[pointCloudData.GetHistory().Length];
-        for (int i = 0; i < pointCloudData.GetHistory().Length; i++)
-        {
-            InputMemory_EyeGazeRaw inputMemory = (InputMemory_EyeGazeRaw)pointCloudData.GetHistory()[i];
-            if (inputMemory.lookedAtTarget != null)
-            {
-                particleArray[i].position = inputMemory.lookedAtPoint;
-            }
-            else 
-            {
-                particleArray[i].position = inputMemory.eyeGaze.origin + inputMemory.eyeGaze.direction.normalized * 2;
-            }
-            
-            // particleArray[i].startColor = pointColor;
-            particleArray[i].startSize = pointSizeInMeters;
-        }
-        pointCloudParticleSystem.SetParticles(particleArray, particleArray.Length);
-        ShowPointCloud();
-    }
+    public abstract void DisplayPointCloud();
 
     public void ShowPointCloud()
     {

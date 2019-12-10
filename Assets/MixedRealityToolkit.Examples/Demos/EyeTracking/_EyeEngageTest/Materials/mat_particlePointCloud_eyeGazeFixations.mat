@@ -8,14 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_particlePointCloud_eyeGazeFixations
-  m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
+  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHABLEND_ON _SPECULAR_HIGHLIGHTS
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 5000
-  stringTagMap:
-    RenderType: Fade
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -88,7 +87,7 @@ Material:
     - _ClippingBorderWidth: 0.025
     - _ColorMode: 0
     - _ColorWriteMask: 15
-    - _Cull: 2
+    - _Cull: 0
     - _CullMode: 2
     - _CustomMode: 2
     - _Cutoff: 0.5
@@ -97,7 +96,7 @@ Material:
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
-    - _DistortionStrengthScaled: 0
+    - _DistortionStrengthScaled: 0.1
     - _DstBlend: 10
     - _EdgeSmoothingValue: 0.002
     - _EmissionEnabled: 0
@@ -124,14 +123,14 @@ Material:
     - _InnerGlow: 0
     - _InnerGlowPower: 4
     - _InstancedColor: 0
-    - _InvFade: 1
+    - _InvFade: 1.08
     - _Iridescence: 0
     - _IridescenceAngle: -0.78
     - _IridescenceIntensity: 0.5
     - _IridescenceThreshold: 0.05
-    - _LightingEnabled: 1
+    - _LightingEnabled: 0
     - _Metallic: 0
-    - _Mode: 5
+    - _Mode: 2
     - _NearLightFade: 0
     - _NearPlaneFade: 0
     - _NormalMapScale: 1
@@ -170,12 +169,12 @@ Material:
     - _ZOffsetFactor: 0
     - _ZOffsetUnits: 0
     - _ZTest: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _ClippingBorderColor: {r: 1, g: 0.2, b: 0, a: 1}
-    - _Color: {r: 0.148332, g: 1, b: 0, a: 0.11764706}
-    - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.11764706}
+    - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvironmentColorX: {r: 1, g: 0, b: 0, a: 1}
