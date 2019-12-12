@@ -5,7 +5,10 @@ using UnityEngine;
 public class History_EyeGazeProcessed : HistoryBase
 {
     [SerializeField]
-    private float angularMaxThreshForFixation = 3f;
+    private float maxAngleWhileStill = 1f;
+
+    [SerializeField]
+    private float maxAngleWhileMoving = 3f;
 
     [SerializeField]
     private float minFixationDurationInMs = 150f;
@@ -50,11 +53,24 @@ public class History_EyeGazeProcessed : HistoryBase
             // Compute angular distance of current eye gaze to the average fixation ray. If the angle is too large, 
             // the new eye gaze is not considered to be part of the fixation anymore. 
             float angle = 0;
+            float maxAngle = 0;
             if ((currentMemory != null) && (currentMemory.FixationMeanDirection != Vector3.zero))
             {
                 Debug.DrawRay(Camera.main.transform.position, rawEyeGaze.eyeGaze.direction, Color.green);
                 Debug.DrawRay(Camera.main.transform.position, currentMemory.FixationMeanDirection, Color.red);
                 angle = Vector3.Angle(rawEyeGaze.eyeGaze.direction, currentMemory.FixationMeanDirection);
+
+                // Compare the angle of the current eye gaze origint + direction to the original ones
+                for (int i = 0; i < currentMemory.rawEyeGazes.Count; i++)
+                {
+                    Vector3 lookatpoint = currentMemory.rawEyeGazes[i].eyeGaze.origin + currentMemory.rawEyeGazes[i].eyeGaze.direction.normalized;
+                    Vector3 dirFromCurrOrigin = lookatpoint - rawEyeGaze.eyeGaze.origin;
+                    float angle2 = Vector3.Angle(rawEyeGaze.eyeGaze.direction, dirFromCurrOrigin);
+                    if (maxAngle < angle2)
+                    {
+                        maxAngle = angle2;
+                    }
+                }
             }
             else
             {
@@ -62,7 +78,7 @@ public class History_EyeGazeProcessed : HistoryBase
             }
                         
             // After computing the angle, let's compare it now:
-            if (angle > angularMaxThreshForFixation) // If larger than the threshold, it's not part of the existing fixation
+            if ((angle > maxAngleWhileStill) || (maxAngle > maxAngleWhileMoving)) // If larger than the threshold, it's not part of the existing fixation
             {
                 maybeInFixation = false;
 
@@ -82,18 +98,19 @@ public class History_EyeGazeProcessed : HistoryBase
                 }
                 else if((rawEyeGaze.timestamp - dtFixationStarted).TotalMilliseconds > minFixationDurationInMs)
                 {
+                    // Todo: If head is moving too much the eye gaze should not count as a fixation
                     // Option 1: We already created a fixation holder and need to update the values
                     if ((fixationStarted) && (currentMemory != null)) 
                     {
-                        currentMemory.Update(rawEyeGaze.timestamp, rawEyeGaze.eyeGaze.direction);
+                        currentMemory.Update(rawEyeGaze);
                     }
                     else
                     {
                         fixationStarted = true;
                         currentMemory = new InputMemory_EyeGazeProcessed(dtFixationStarted);
                         // Todo: Actually we need to add not only the previous but all of the gaze points that were within the proximity
-                        currentMemory.Update(previousEyeGaze.timestamp, previousEyeGaze.eyeGaze.direction);
-                        currentMemory.Update(rawEyeGaze.timestamp, rawEyeGaze.eyeGaze.direction);
+                        currentMemory.Update(previousEyeGaze);
+                        currentMemory.Update(rawEyeGaze);
                         Remember(DateTime.UtcNow, currentMemory);
                     }
                 }

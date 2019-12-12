@@ -14344,7 +14344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &845975225
 Transform:
   m_ObjectHideFlags: 0
@@ -14894,7 +14894,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915628938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 5, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 1698852960}
@@ -28727,7 +28727,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646623647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 534f8922336daa847ac60ed64cd860fe, type: 3}
   m_Name: 
@@ -28753,11 +28753,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointCloudParticleSystem: {fileID: 1171624894}
   pointCloudData: {fileID: 1646623654}
-  pointSizeInMeters: 0.05
-  isRunning: 1
-  color_Default: {r: 1, g: 0, b: 0.60188293, a: 0.78431374}
+  pointSizeInMeters: 0.01
+  isRunning: 0
+  color_Default: {r: 0, g: 1, b: 0.2262168, a: 0.78431374}
+  show_Fixations: 1
   distFromHitPoint: 0.01
-  color_NoHit: {r: 0.33959258, g: 0, b: 0.45490196, a: 0.78431374}
+  color_NoHit: {r: 0.6132076, g: 0, b: 0.049367674, a: 0.78431374}
+  rawEyeGazeSettings:
+    show_RawEyeGazes: 1
+    color_RawEyeGaze: {r: 0.7254902, g: 0.7254902, b: 0.7254902, a: 1}
+    pointCloudParticleSystem_RawEyeGaze: {fileID: 0}
+  show_RawEyeGazes: 1
+  color_RawEyeGaze: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.39215687}
+  pointCloudParticleSystem_RawEyeGaze: {fileID: 458025219}
 --- !u!114 &1646623653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28770,7 +28778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4434332b81e5061458beb30bbe0aa551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMemoryInSeconds: 10
+  maxMemoryInSeconds: 30
 --- !u!114 &1646623654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28783,8 +28791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680f59b9f3093274c82dca842a633c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMemoryInSeconds: 10
-  angularMaxThreshForFixation: 2
+  maxMemoryInSeconds: 30
+  maxAngleWhileStill: 1
+  maxAngleWhileMoving: 3
   minFixationDurationInMs: 500
 --- !u!1001 &1666569904
 PrefabInstance:
