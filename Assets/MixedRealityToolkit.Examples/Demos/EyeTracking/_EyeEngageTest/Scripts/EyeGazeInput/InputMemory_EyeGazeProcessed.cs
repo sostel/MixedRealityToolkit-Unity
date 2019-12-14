@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.MixedReality.Toolkit.Examples;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,9 +16,10 @@ public class InputMemory_EyeGazeProcessed : InputMemory
         tStartFixation = startFixationTime;
     }
 
-    public void Update(InputMemory_EyeGazeRaw rawEyeGaze)
+    public void Update(InputMemory_EyeGazeRaw rawEyeGaze, VoiceDictationStatus voiceStatus)
     {
         tEndFixation = rawEyeGaze.timestamp;
+        rawEyeGaze.voiceInputStatus = voiceStatus;
         rawEyeGazes.Add(rawEyeGaze);
     }
 

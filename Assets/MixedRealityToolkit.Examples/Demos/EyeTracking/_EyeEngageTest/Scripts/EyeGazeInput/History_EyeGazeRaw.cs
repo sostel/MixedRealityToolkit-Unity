@@ -38,7 +38,7 @@ public class History_EyeGazeRaw : HistoryBase
     {
         Remember(eyeGazeProvider.Timestamp, new InputMemory_EyeGazeRaw(
             new Ray(eyeGazeProvider.GazeOrigin, eyeGazeProvider.GazeDirection), 
-            EyeTrackingTarget.LookedAtTarget, EyeTrackingTarget.LookedAtPoint));
+            EyeTrackingTarget.LookedAtTarget, EyeTrackingTarget.LookedAtPoint, Microsoft.MixedReality.Toolkit.Examples.VoiceDictationStatus.Unknown));
     }
 
     public GameObject GetLookedAtTargetAt(DateTime date)

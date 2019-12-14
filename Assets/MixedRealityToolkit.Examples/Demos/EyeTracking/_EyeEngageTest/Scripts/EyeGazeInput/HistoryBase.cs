@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -88,6 +89,29 @@ public abstract class HistoryBase : MonoBehaviour
             return memory;
         }
 
+        return null;
+    }
+
+    public InputMemory GetMemoryBefore(DateTime date)
+    {
+        if (memories == null)
+        {
+            ResetHistory();
+        }
+
+        IEnumerable<DateTime> dates = memories.Keys.Where(x => x < date);
+        if ((dates != null) && (dates.Count() > 0))
+        {
+            DateTime timestamp = dates.Max(); // Warning: Not the most efficient!?
+            InputMemory memory;
+            bool check = memories.TryGetValue(timestamp, out memory);
+            memory.timestamp = timestamp;
+
+            if (check)
+            {
+                return memory;
+            }
+        }
         return null;
     }
 

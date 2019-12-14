@@ -102,15 +102,15 @@ public class History_EyeGazeProcessed : HistoryBase
                     // Option 1: We already created a fixation holder and need to update the values
                     if ((fixationStarted) && (currentMemory != null)) 
                     {
-                        currentMemory.Update(rawEyeGaze);
+                        currentMemory.Update(rawEyeGaze, MicrophoneManager.Instance.dictationStatus);
                     }
                     else
                     {
                         fixationStarted = true;
                         currentMemory = new InputMemory_EyeGazeProcessed(dtFixationStarted);
                         // Todo: Actually we need to add not only the previous but all of the gaze points that were within the proximity
-                        currentMemory.Update(previousEyeGaze);
-                        currentMemory.Update(rawEyeGaze);
+                        currentMemory.Update(previousEyeGaze, MicrophoneManager.Instance.dictationStatus);
+                        currentMemory.Update(rawEyeGaze, MicrophoneManager.Instance.dictationStatus);
                         Remember(DateTime.UtcNow, currentMemory);
                     }
                 }
