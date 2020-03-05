@@ -177,7 +177,7 @@ In the Mixed Reality Toolkit, data providers are configured using [profiles](../
 Data providers with additional configuration options (ex: [InputSimulationService](../InputSimulation/InputSimulationService.md)) should create a profile and inspector to allow
 customers to modify the behavior to best suit the needs of the application.
 
-> The complete code for the example in this section can be found in the MixedRealityToolkit.Services\InputSimulation folder.
+> The complete code for the example in this section can be found in the MRTK.Services/InputSimulation folder.
 
 ### Define the profile
 
@@ -232,7 +232,7 @@ the file will be located in the ContosoInput\Editor folder. This assembly defini
 
 Once created, the data provider can be registered with the input system and be used in the application.
 
-![Registered input system data providers](../Images/Input/RegisteredServiceProviders.png)
+![Registered input system data providers](../Images/Input/RegisteredServiceProviders.PNG)
 
 ## Packaging and distribution
 

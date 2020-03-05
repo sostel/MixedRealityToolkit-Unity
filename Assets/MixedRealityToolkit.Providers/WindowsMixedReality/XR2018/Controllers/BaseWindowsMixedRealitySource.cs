@@ -30,14 +30,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         /// <inheritdoc />
         public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions => DefaultInteractions;
 
-        /// <inheritdoc />
-        public override void SetupDefaultInteractions(Handedness controllerHandedness)
-        {
-            AssignControllerMappings(DefaultInteractions);
-        }
-
 #if UNITY_WSA
-
         /// <summary>
         /// The last updated source state reading for this Windows Mixed Reality Source.
         /// </summary>
@@ -358,7 +351,6 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         }
 
         #endregion Update data functions
-
 #endif // UNITY_WSA
     }
 }
